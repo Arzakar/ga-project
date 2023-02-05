@@ -15,16 +15,19 @@
 
 	<name>ga-math-domain</name>
 
-	<properties>
-		<java.version>19</java.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.24</version>
 			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.9.1</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
