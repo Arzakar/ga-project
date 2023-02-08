@@ -2,7 +2,6 @@ package org.klimashin.ga.math.domain.rungekutta;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RkData {
+public class RkStepData {
 
     double argument;
     double argumentStep;

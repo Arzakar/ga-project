@@ -2,12 +2,12 @@ package org.klimashin.ga.math.domain.asserter;
 
 import lombok.experimental.UtilityClass;
 import org.junit.jupiter.api.Assertions;
-import org.klimashin.ga.math.domain.rungekutta.RkData;
+import org.klimashin.ga.math.domain.rungekutta.RkStepData;
 
 @UtilityClass
 public class RkDataAsserter {
 
-    public void assertEquals(RkData expected, RkData actual, double delta) {
+    public void assertEquals(RkStepData expected, RkStepData actual, double delta) {
         Assertions.assertEquals(expected.getArgument(), actual.getArgument(), delta);
         Assertions.assertEquals(expected.getArgumentStep(), actual.getArgumentStep(), delta);
 
