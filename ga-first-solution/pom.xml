@@ -13,10 +13,4 @@
 		<module>ga-first-solution-application</module>
 	</modules>
 
-	<properties>
-		<java.version>19</java.version>
-		<maven.compiler.source>19</maven.compiler.source>
-		<maven.compiler.target>19</maven.compiler.target>
-	</properties>
-
 </project>

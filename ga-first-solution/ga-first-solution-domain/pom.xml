@@ -3,14 +3,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.klimashin</groupId>
-		<artifactId>ga-first-solution</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-
+	<groupId>org.klimashin</groupId>
 	<artifactId>ga-first-solution-domain</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<java.version>19</java.version>
+		<maven.compiler.source>19</maven.compiler.source>
+		<maven.compiler.target>19</maven.compiler.target>
+	</properties>
 
 	<dependencies>
 		<dependency>
