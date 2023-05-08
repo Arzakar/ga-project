@@ -10,6 +10,7 @@
 
 	<modules>
 		<module>ga-first-solution-domain</module>
+		<module>ga-first-solution-application</module>
 	</modules>
 
 	<properties>
