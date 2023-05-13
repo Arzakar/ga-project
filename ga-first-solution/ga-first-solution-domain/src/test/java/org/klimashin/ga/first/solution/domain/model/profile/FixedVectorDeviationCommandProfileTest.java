@@ -3,11 +3,10 @@ package org.klimashin.ga.first.solution.domain.model.profile;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import org.klimashin.ga.first.solution.domain.TestUtil;
 import org.klimashin.ga.first.solution.domain.math.Point;
 import org.klimashin.ga.first.solution.domain.math.Vector;
-import org.klimashin.ga.first.solution.domain.model.CelestialBody;
 import org.klimashin.ga.first.solution.domain.model.Pair;
-import org.klimashin.ga.first.solution.domain.model.Spacecraft;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,12 +35,19 @@ class FixedVectorDeviationCommandProfileTest {
     @ParameterizedTest
     @MethodSource("thrustForceDirectionTestSource")
     void getThrustForceDirection_shouldReturnVector(long currentTime, Vector expectedVector) {
-        var spacecraft = Spacecraft.builder()
-                        .position(new Point(0, 0, 0))
-                        .build();
-        var solar = CelestialBody.builder()
-                        .position(new Point(10, 0, 0))
-                        .build();
+        var spacecraft = TestUtil.spacecraftGenerator()
+                .withPosition(new Point(0, 0, 0))
+                .generate();
+        var solar = TestUtil.celestialBodyGenerator()
+                .withOrbit(TestUtil.orbitGenerator()
+                        .withSemiMajorAxis(10)
+                        .withEccentricity(0)
+                        .withInclination(0)
+                        .withLongitudeAscNode(0)
+                        .withPerihelionArgument(0)
+                        .withTrueAnomaly(0)
+                        .generate())
+                .generate();
         var intervals = Map.of(
                 Pair.of(0, 10), Math.PI / 2,
                 Pair.of(11, 20), Math.PI,
@@ -66,12 +72,19 @@ class FixedVectorDeviationCommandProfileTest {
 
     @Test
     void getThrustForceDirection_shouldThrowException() {
-        var spacecraft = Spacecraft.builder()
-                .position(new Point(0, 0, 0))
-                .build();
-        var solar = CelestialBody.builder()
-                .position(new Point(10, 0, 0))
-                .build();
+        var spacecraft = TestUtil.spacecraftGenerator()
+                .withPosition(new Point(0, 0, 0))
+                .generate();
+        var solar = TestUtil.celestialBodyGenerator()
+                .withOrbit(TestUtil.orbitGenerator()
+                        .withSemiMajorAxis(10)
+                        .withEccentricity(0)
+                        .withInclination(0)
+                        .withLongitudeAscNode(0)
+                        .withPerihelionArgument(0)
+                        .withTrueAnomaly(0)
+                        .generate())
+                .generate();
         var intervals = Map.of(
                 Pair.of(0, 10), Math.PI / 2,
                 Pair.of(11, 20), Math.PI,

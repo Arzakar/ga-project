@@ -1,9 +1,10 @@
 package org.klimashin.ga.first.solution.domain.util;
 
-import lombok.experimental.UtilityClass;
 import org.klimashin.ga.first.solution.domain.math.Point;
 import org.klimashin.ga.first.solution.domain.model.PointParticle;
 import org.klimashin.ga.first.solution.domain.math.Vector;
+
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Vectors {

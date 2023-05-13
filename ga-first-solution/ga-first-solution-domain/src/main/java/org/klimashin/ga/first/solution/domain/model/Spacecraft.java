@@ -1,34 +1,43 @@
 package org.klimashin.ga.first.solution.domain.model;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
+import org.klimashin.ga.first.solution.domain.math.Point;
 import org.klimashin.ga.first.solution.domain.math.Vector;
 
-@Data
-@SuperBuilder
-@Accessors(chain = true)
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
+
+@Getter
+@ToString(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Spacecraft extends PointParticle {
 
-    Vector speed;
+    final Vector speed;
     Vector acceleration;
-
-    double dryMass;
     double fuelMass;
+    final Engine engine;
+    final int engineCount;
 
-    Engine engine;
-    int engineCount;
-
-    @Override
-    public double getMass() {
-        return dryMass + fuelMass;
+    public static SpacecraftBuilder builder() {
+        return new SpacecraftBuilder();
     }
 
-    public Spacecraft changePosition(Vector force, double deltaTime) {
-        acceleration = force.copy().multiply(getMass());
+    private Spacecraft(double mass, Point position, Vector speed, Vector acceleration,
+                       double fuelMass, Engine engine, int engineCount) {
+        this.mass = mass;
+        this.position = position;
+        this.speed = speed;
+        this.acceleration = acceleration;
+        this.fuelMass = fuelMass;
+        this.engine = engine;
+        this.engineCount = engineCount;
+    }
+
+    public Spacecraft changeDynamicState(Vector force, double deltaTime) {
+        acceleration = force.copy().divide(mass);
         speed.add(acceleration.copy().multiply(deltaTime));
         position.move(speed.copy().multiply(deltaTime));
         return this;
@@ -38,9 +47,33 @@ public class Spacecraft extends PointParticle {
         return engine.getThrust() * engineCount;
     }
 
-    public void reduceFuel(double deltaTime) {
+    public Spacecraft reduceFuel(double deltaTime) {
         var deltaMass = (engine.getFuelConsumption() * engineCount) * deltaTime;
         fuelMass -= deltaMass;
         mass -= deltaMass;
+
+        return this;
+    }
+
+    @Setter
+    @Accessors(chain = true, fluent = true)
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class SpacecraftBuilder {
+
+        double mass;
+        Point position;
+        Vector speed;
+        Vector acceleration;
+        double fuelMass;
+        Engine engine;
+        int engineCount;
+
+        public Spacecraft build() {
+            if (mass <= this.fuelMass) {
+                throw new IllegalArgumentException("Масса топлива не может быть больше или равной массе КА");
+            }
+
+            return new Spacecraft(mass, position, speed, acceleration, fuelMass, engine, engineCount);
+        }
     }
 }

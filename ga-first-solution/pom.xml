@@ -9,8 +9,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>ga-first-solution-domain</module>
 		<module>ga-first-solution-application</module>
+		<module>ga-first-solution-domain</module>
 	</modules>
 
 </project>

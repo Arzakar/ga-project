@@ -56,7 +56,7 @@ public class Vector {
 
     public Vector divide(double ratio) {
         if (ratio == 0) {
-            throw new ArithmeticException();
+            throw new ArithmeticException("Ошибка при делении вектора на 0");
         }
 
         this.x /= ratio;
@@ -83,5 +83,9 @@ public class Vector {
 
     public Vector copy() {
         return new Vector(this);
+    }
+
+    public Point toPoint() {
+        return new Point(x, y, z);
     }
 }

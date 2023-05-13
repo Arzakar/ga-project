@@ -1,8 +1,9 @@
 package org.klimashin.ga.first.solution.domain.util;
 
-import lombok.experimental.UtilityClass;
 import org.klimashin.ga.first.solution.domain.model.PointParticle;
 import org.klimashin.ga.first.solution.domain.math.Vector;
+
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Physics {
@@ -14,11 +15,7 @@ public class Physics {
     }
 
     public static double gravitationParameter(double firstMass, double secondMass) {
-        return G * (firstMass * secondMass);
-    }
-
-    public static double gravitationForce(double firstMass, double secondMass, double range) {
-        return G * ((firstMass * secondMass) / Math.pow(range, 2));
+        return G * (firstMass + secondMass);
     }
 
     public static double gravitationForceMagnitude(PointParticle firstParticle, PointParticle secondParticle) {

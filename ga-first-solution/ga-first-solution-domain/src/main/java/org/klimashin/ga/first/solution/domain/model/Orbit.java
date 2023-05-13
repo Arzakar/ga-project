@@ -2,13 +2,14 @@ package org.klimashin.ga.first.solution.domain.model;
 
 import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-@Data
+@Getter
 @Builder
-@Accessors(chain = true)
+@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Orbit {
 
@@ -16,9 +17,15 @@ public class Orbit {
     double eccentricity;
     double inclination;
     double longitudeAscNode;
-    double periapsisArgument;
+    double perihelionArgument;
+
+    @Setter
     double trueAnomaly;
 
     double attractingBodyMass;
     long zeroEpoch;
+
+    public double getFocalParameter() {
+        return semiMajorAxis * (1 - eccentricity);
+    }
 }

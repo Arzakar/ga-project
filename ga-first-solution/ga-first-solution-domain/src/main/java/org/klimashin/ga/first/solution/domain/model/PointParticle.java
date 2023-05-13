@@ -3,14 +3,16 @@ package org.klimashin.ga.first.solution.domain.model;
 import org.klimashin.ga.first.solution.domain.math.Point;
 
 import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
 
-@Data
-@SuperBuilder
-@Accessors(chain = true)
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PROTECTED)
 public class PointParticle {
 

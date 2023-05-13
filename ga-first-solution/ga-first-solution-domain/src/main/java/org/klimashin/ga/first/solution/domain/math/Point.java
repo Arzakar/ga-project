@@ -18,10 +18,21 @@ public class Point {
     double y;
     double z;
 
+    public static Point of(double x, double y, double z) {
+        return new Point(x, y, z);
+    }
+
     public Point change(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
+        return this;
+    }
+
+    public Point change(Point referencePoint) {
+        this.x = referencePoint.getX();
+        this.y = referencePoint.getY();
+        this.z = referencePoint.getZ();
         return this;
     }
 
@@ -30,5 +41,9 @@ public class Point {
         this.y += vector.getY();
         this.z += vector.getZ();
         return this;
+    }
+
+    public Point copy() {
+        return new Point(x, y, z);
     }
 }

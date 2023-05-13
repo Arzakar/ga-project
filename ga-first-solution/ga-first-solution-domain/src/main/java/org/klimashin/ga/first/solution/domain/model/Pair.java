@@ -1,12 +1,12 @@
 package org.klimashin.ga.first.solution.domain.model;
 
-public record Pair(long startValue, long endValue) {
+public record Pair(long leftValue, long rightValue) {
 
-    public int compareToByStartValue(Pair pair) {
-        return Long.compare(this.startValue, pair.startValue);
+    public int compareToByLeftValue(Pair pair) {
+        return Long.compare(this.leftValue, pair.leftValue);
     }
 
-    public static Pair of(long startValue, long endValue) {
-        return new Pair(startValue, endValue);
+    public static Pair of(long leftValue, long rightValue) {
+        return new Pair(leftValue, rightValue);
     }
 }

@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ga-first-solution
+
+  datasource:
+    url: jdbc:postgresql://localhost:5401/FIRST_SOLUTION
+    username: FIRST_SOLUTION
+    password: FIRST_SOLUTION
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog-master.xml

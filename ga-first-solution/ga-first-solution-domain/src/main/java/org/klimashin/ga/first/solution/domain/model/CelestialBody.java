@@ -1,31 +1,64 @@
 package org.klimashin.ga.first.solution.domain.model;
 
+import static org.klimashin.ga.first.solution.domain.util.Physics.G;
+
+
+import org.klimashin.ga.first.solution.domain.math.Point;
+import org.klimashin.ga.first.solution.domain.math.Vector;
 import org.klimashin.ga.first.solution.domain.method.FixedPointIterationMethod;
+import org.klimashin.ga.first.solution.domain.util.Orbits;
 import org.klimashin.ga.first.solution.domain.util.Physics;
 
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
 
-@Data
-@SuperBuilder
-@Accessors(chain = true)
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Getter
+@ToString(callSuper = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CelestialBody extends PointParticle {
 
-    String name;
     Orbit orbit;
+    String name;
 
-    public CelestialBody move(long currentTime, long deltaTime) {
-        var eccentricAnomaly = this.getEccentricAnomaly(currentTime + deltaTime);
-        var x = orbit.getSemiMajorAxis() * Math.cos(eccentricAnomaly);
-        var y = orbit.getSemiMajorAxis() * Math.sqrt(1 - orbit.getEccentricity()) * Math.sin(eccentricAnomaly);
+    public static CelestialBodyBuilder builder() {
+        return new CelestialBodyBuilder();
+    }
 
-        this.position.change(x, y, position.getZ());
+    private CelestialBody(double mass, Point position, Orbit orbit, String name) {
+        this.mass = mass;
+        this.position = position;
+        this.orbit = orbit;
+        this.name = name;
+    }
+
+    public CelestialBody move(long deltaTime) {
+        var meanMotion = getMeanMotion();
+        var eccentricity = orbit.getEccentricity();
+
+        var currentEccentricAnomaly = Orbits.extractEccentricAnomaly(orbit);
+        var timeFromPerihelionEpoch = Math.round((currentEccentricAnomaly - eccentricity * Math.sin(currentEccentricAnomaly)) / meanMotion);
+
+        var nextEccentricAnomaly = getEccentricAnomaly(timeFromPerihelionEpoch + deltaTime);
+        var nextTrueAnomaly = Orbits.calculateTrueAnomaly(nextEccentricAnomaly, eccentricity);
+        var nextPosition = Orbits.calculatePosition(this.orbit, nextEccentricAnomaly);
+
+        orbit.setTrueAnomaly(nextTrueAnomaly);
+        position.change(nextPosition);
 
         return this;
+    }
+
+    public Vector getSpeed() {
+        var rate = Math.sqrt(G * orbit.getAttractingBodyMass() / orbit.getFocalParameter());
+        var radialSpeed = rate * orbit.getEccentricity() * Math.sin(orbit.getTrueAnomaly());
+        var transversalSpeed = rate * (1 + orbit.getEccentricity() * Math.cos(orbit.getTrueAnomaly()));
+
+        return Vector.of(radialSpeed, transversalSpeed, 0)
+                .rotateByZ(orbit.getTrueAnomaly());
     }
 
     public double getMeanMotion() {
@@ -43,7 +76,24 @@ public class CelestialBody extends PointParticle {
         }
 
         var meanAnomaly = getMeanAnomaly(currentTime);
-        return new FixedPointIterationMethod(initialGuess -> orbit.getEccentricity() * Math.sin(initialGuess) + initialGuess, 0.000001)
+        return new FixedPointIterationMethod(variable -> orbit.getEccentricity() * Math.sin(variable) + meanAnomaly, 0.000001)
                 .getSolution(meanAnomaly);
+    }
+
+    @Setter
+    @Accessors(chain = true, fluent = true)
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class CelestialBodyBuilder {
+
+        double mass;
+        Orbit orbit;
+        String name;
+
+        public CelestialBody build() {
+            var eccentricAnomaly = Orbits.extractEccentricAnomaly(orbit);
+            var position = Orbits.calculatePosition(orbit, eccentricAnomaly);
+
+            return new CelestialBody(mass, position, orbit, name);
+        }
     }
 }
