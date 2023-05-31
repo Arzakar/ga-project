@@ -64,38 +64,11 @@
         </sql>
     </changeSet>
 
-    <changeSet id="2023-05-10--03-create-celestial-body-table" author="Stepan_Klimashin">
-        <createTable tableName="celestial_body">
-            <column name="id" type="uuid">
-                <constraints primaryKey="true"
-                             primaryKeyName="celestial_body_pk"/>
-            </column>
-            <column name="name" type="varchar">
-                <constraints nullable="false"
-                             unique="true"/>
-            </column>
-            <column name="mass" type="double">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-        <sql>
-            ALTER TABLE celestial_body
-            ADD CONSTRAINT positive_mass_constraint
-            CHECK (mass > 0);
-        </sql>
-    </changeSet>
-
     <changeSet id="2023-05-10--04-create-orbit-table" author="Stepan_Klimashin">
         <createTable tableName="orbit">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"
                              primaryKeyName="orbit_pk"/>
-            </column>
-            <column name="celestial_body_id" type="uuid">
-                <constraints nullable="false"
-                             foreignKeyName="orbit_to_celestial_body_fk"
-                             referencedTableName="celestial_body"
-                             referencedColumnNames="id"/>
             </column>
             <column name="semi_major_axis" type="double">
                 <constraints nullable="false"/>
@@ -117,6 +90,32 @@
             ALTER TABLE orbit
             ADD CONSTRAINT positive_semi_major_axis_constraint
             CHECK (semi_major_axis > 0);
+        </sql>
+    </changeSet>
+
+    <changeSet id="2023-05-10--03-create-celestial-body-table" author="Stepan_Klimashin">
+        <createTable tableName="celestial_body">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"
+                             primaryKeyName="celestial_body_pk"/>
+            </column>
+            <column name="orbit_id" type="uuid">
+                <constraints foreignKeyName="celestial_body_to_orbit_fk"
+                             referencedTableName="orbit"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false"
+                             unique="true"/>
+            </column>
+            <column name="mass" type="double">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <sql>
+            ALTER TABLE celestial_body
+            ADD CONSTRAINT positive_mass_constraint
+            CHECK (mass > 0);
         </sql>
     </changeSet>
 
@@ -205,28 +204,22 @@
             <column name="initial_state_id" type="uuid">
                 <constraints nullable="false"/>
             </column>
-            <column name="spacecraft_id" type="uuid">
-                <constraints nullable="false"
-                             foreignKeyName="initial_state_to_spacecraft_fk"
-                             referencedTableName="spacecraft"
-                             referencedColumnNames="id"/>
-            </column>
-            <column name="spacecraft_position_x" type="double" defaultOnNull="true" defaultValue="0">
+            <column name="spacecraft_position_x" type="double">
                 <constraints nullable="false"/>
             </column>
-            <column name="spacecraft_position_y" type="double" defaultOnNull="true" defaultValue="0">
+            <column name="spacecraft_position_y" type="double">
                 <constraints nullable="false"/>
             </column>
-            <column name="spacecraft_position_z" type="double" defaultOnNull="true" defaultValue="0">
+            <column name="spacecraft_position_z" type="double">
                 <constraints nullable="false"/>
             </column>
-            <column name="spacecraft_speed_x" type="double" defaultOnNull="true" defaultValue="0">
+            <column name="spacecraft_speed_x" type="double">
                 <constraints nullable="false"/>
             </column>
-            <column name="spacecraft_speed_y" type="double" defaultOnNull="true" defaultValue="0">
+            <column name="spacecraft_speed_y" type="double">
                 <constraints nullable="false"/>
             </column>
-            <column name="spacecraft_speed_z" type="double" defaultOnNull="true" defaultValue="0">
+            <column name="spacecraft_speed_z" type="double">
                 <constraints nullable="false"/>
             </column>
             <column name="finish_fuel_mass" type="double">
@@ -262,7 +255,7 @@
                              referencedTableName="celestial_body"
                              referencedColumnNames="id"/>
             </column>
-            <column name="true_anomaly" type="double" defaultOnNull="true" defaultValue="0">
+            <column name="true_anomaly" type="double">
                 <constraints nullable="false"/>
             </column>
         </createTable>

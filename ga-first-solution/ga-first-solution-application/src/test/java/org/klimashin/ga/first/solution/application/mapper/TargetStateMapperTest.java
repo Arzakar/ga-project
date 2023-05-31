@@ -4,12 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.klimashin.ga.first.solution.application.configuration.EasyRandomConfiguration.defaultEasyRandom;
 
 import org.klimashin.ga.first.solution.application.data.condition.ProximityOfTwoObjectsData;
-import org.klimashin.ga.first.solution.application.data.condition.TargetStateData;
 import org.klimashin.ga.first.solution.application.data.condition.TargetStateTypeData;
-import org.klimashin.ga.first.solution.application.data.profile.CommandProfileTypeData;
-import org.klimashin.ga.first.solution.application.data.profile.FixedVectorDeviationProfile;
 import org.klimashin.ga.first.solution.domain.math.Point;
-import org.klimashin.ga.first.solution.domain.model.Pair;
 import org.klimashin.ga.first.solution.domain.model.PointParticle;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,9 +16,6 @@ import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.List;
-import java.util.Map;
 
 @ExtendWith(MockitoExtension.class)
 class TargetStateMapperTest {

@@ -12,7 +12,8 @@ import org.mapstruct.ReportingPolicy;
         uses = {
                 CelestialBodyMapper.class,
                 CommandProfileMapper.class,
-                SpacecraftMapper.class
+                SpacecraftMapper.class,
+                TargetStateMapper.class
         })
 public interface ModelEnvironmentMapper {
 
@@ -26,8 +27,8 @@ public interface ModelEnvironmentMapper {
     @Mapping(target = "spacecraftSpeedZ", source = "spacecraft.speed.z")
     @Mapping(target = "commandProfileType", source = "commandProfile")
     @Mapping(target = "commandProfilePayload", source = "commandProfile")
-    @Mapping(target = "targetStateType", source = "commandProfile")
-    @Mapping(target = "targetStatePayload", source = "commandProfile")
+    @Mapping(target = "targetStateType", source = "targetState")
+    @Mapping(target = "targetStatePayload", source = "targetState")
     @Mapping(target = "celestialBodies", ignore = true)
     InitialStateEntity dataToInitialStateEntity(ModelEnvironmentData data);
 
