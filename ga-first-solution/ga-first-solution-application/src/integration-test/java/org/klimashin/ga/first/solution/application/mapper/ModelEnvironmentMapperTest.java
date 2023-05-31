@@ -24,35 +24,12 @@ import java.util.List;
 import java.util.Map;
 
 @IntegrationTest
-//@ExtendWith(MockitoExtension.class)
 class ModelEnvironmentMapperTest {
 
-    private EasyRandom easyRandom = defaultEasyRandom();
+    private final EasyRandom easyRandom = defaultEasyRandom();
 
-    //@InjectMocks
     @Autowired
     private ModelEnvironmentMapper mapper;
-
-//    @Spy
-//    private CelestialBodyMapper celestialBodyMapper = Mappers.getMapper(CelestialBodyMapper.class);
-//
-//    @Spy
-//    private CommandProfileMapper commandProfileMapper = Mappers.getMapper(CommandProfileMapper.class);
-//
-//    @Spy
-//    private EngineMapper engineMapper = Mappers.getMapper(EngineMapper.class);
-//
-//    @Spy
-//    private ObjectMapper objectMapper = new ObjectMapper();
-//
-//    @Spy
-//    private OrbitMapper orbitMapper = Mappers.getMapper(OrbitMapper.class);
-//
-//    @Spy
-//    private SpacecraftMapper spacecraftMapper = Mappers.getMapper(SpacecraftMapper.class);
-//
-//    @Spy
-//    private TargetStateMapper targetStateMapper = Mappers.getMapper(TargetStateMapper.class);
 
     @Test
     void dataToInitialStateEntity_shouldMap() {
@@ -168,5 +145,4 @@ class ModelEnvironmentMapperTest {
         assertThat(result.getCommandProfilePayload()).isEqualToIgnoringWhitespace(expectedCommandProfilePayload);
         assertThat(result.getTargetStatePayload()).isEqualToIgnoringWhitespace(expectedTargetStatePayload);
     }
-
 }

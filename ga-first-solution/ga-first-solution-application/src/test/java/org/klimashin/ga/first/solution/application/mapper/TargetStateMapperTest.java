@@ -20,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class TargetStateMapperTest {
 
-    private EasyRandom easyRandom = defaultEasyRandom();
+    private final EasyRandom easyRandom = defaultEasyRandom();
 
     @InjectMocks
     private TargetStateMapper mapper = Mappers.getMapper(TargetStateMapper.class);
