@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.klimashin.ga.first.solution.api.configuration.FeignConfiguration
