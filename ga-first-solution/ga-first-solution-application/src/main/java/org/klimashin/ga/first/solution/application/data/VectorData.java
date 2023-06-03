@@ -5,16 +5,12 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
-import java.util.UUID;
-
 @Data
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CelestialBodyData {
+public class VectorData {
 
-    UUID id;
-    OrbitData orbit;
-    String name;
-    Double mass;
-    PointData position;
+    Double x;
+    Double y;
+    Double z;
 }

@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-import java.util.UUID;
-
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class InitialStateCelestialBodyRequestDtoV1 {
+public class PointDtoV1 {
 
-    UUID celestialBodyId;
-    Double trueAnomaly;
+    Double x;
+    Double y;
+    Double z;
 }

@@ -1,8 +1,5 @@
 package org.klimashin.ga.first.solution.application.data;
 
-import org.klimashin.ga.first.solution.domain.math.Point;
-import org.klimashin.ga.first.solution.domain.math.Vector;
-
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,9 +14,9 @@ public class SpacecraftData {
 
     UUID id;
     Double mass;
-    Point position;
-    Vector speed;
-    Vector acceleration;
+    PointData position;
+    VectorData speed;
+    VectorData acceleration;
     Double dryMass;
     Double fuelMass;
     EngineData engine;

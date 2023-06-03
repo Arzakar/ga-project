@@ -62,10 +62,10 @@ public class InitialStateEntity {
     Double spacecraftSpeedZ;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "command_profile_type", nullable = false)
+    @Column(name = "command_profile_type")
     CommandProfileType commandProfileType;
 
-    @Column(name = "command_profile_payload", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "command_profile_payload", columnDefinition = "TEXT")
     String commandProfilePayload;
 
     @Enumerated(value = EnumType.STRING)

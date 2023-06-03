@@ -1,5 +1,7 @@
 package org.klimashin.ga.first.solution.application.data;
 
+import org.klimashin.ga.first.solution.application.data.initial.state.InitialStateData;
+
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.Accessors;

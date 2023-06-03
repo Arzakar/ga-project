@@ -5,18 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class InitialStatesWithFixedVectorDeviationRequestDtoV1 {
+public class InitialStateRequestDtoV1 {
 
     UUID centralBodyId;
-    List<InitialStateCelestialBodyRequestDtoV1> celestialBodies;
-    InitialStateSpacecraftRequestDtoV1 spacecraft;
-    FixedVectorDeviationProfileDtoV1 commandProfilePayload;
+    Map<UUID, Double> celestialBodies;
+    UUID spacecraftId;
+    PointDtoV1 spacecraftPosition;
+    VectorDtoV1 spacecraftSpeed;
     TargetStateTypeDtoV1 targetStateType;
-    String targetStatePayload;
+    Object targetStatePayload;
 }

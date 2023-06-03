@@ -5,8 +5,6 @@ import static org.klimashin.ga.first.solution.application.configuration.EasyRand
 
 import org.klimashin.ga.first.solution.application.data.condition.ProximityOfTwoObjectsData;
 import org.klimashin.ga.first.solution.application.data.condition.TargetStateTypeData;
-import org.klimashin.ga.first.solution.domain.math.Point;
-import org.klimashin.ga.first.solution.domain.model.PointParticle;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jeasy.random.EasyRandom;
@@ -16,6 +14,8 @@ import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 class TargetStateMapperTest {
@@ -40,27 +40,13 @@ class TargetStateMapperTest {
     @Test
     void profileDataToProfilePayloadEntity_shouldMapFixedVectorDeviationProfile() {
         var data = new ProximityOfTwoObjectsData()
-                .setFirstParticle(new PointParticle(100, Point.of(1, 1, 1)))
-                .setSecondParticle(new PointParticle(200, Point.of(2, 2, 2)))
+                .setFirstObjectId(UUID.fromString("62799c01-6dd3-486d-b393-d909f90fb015"))
+                .setSecondObjectId(UUID.fromString("c53fe731-21bc-4dcc-ae96-e89d4b31563a"))
                 .setRequiredDistance(500d);
         var expectedResult = """
                 {
-                    "firstParticle": {
-                        "mass": 100.0,
-                        "position": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        }
-                    },
-                    "secondParticle": {
-                        "mass": 200.0,
-                        "position": {
-                            "x": 2.0,
-                            "y": 2.0,
-                            "z": 2.0
-                        }
-                    },
+                    "firstObjectId": "62799c01-6dd3-486d-b393-d909f90fb015",
+                    "secondObjectId": "c53fe731-21bc-4dcc-ae96-e89d4b31563a",
                     "requiredDistance":500.0
                 }
                 """;

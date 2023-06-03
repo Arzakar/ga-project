@@ -9,6 +9,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Objects;
+
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.ERROR)
 public abstract class CommandProfileMapper {
@@ -17,10 +19,18 @@ public abstract class CommandProfileMapper {
     private ObjectMapper objectMapper;
 
     public CommandProfileType profileDataToProfileTypeEntity(CommandProfileData data) {
+        if (Objects.isNull(data) || Objects.isNull(data.getType())) {
+            return null;
+        }
+
         return CommandProfileType.valueOf(data.getType().name());
     }
 
     public String profileDataToProfilePayloadEntity(CommandProfileData data) {
+        if (Objects.isNull(data) || Objects.isNull(data.getProfile())) {
+            return null;
+        }
+
         try {
             return objectMapper.writeValueAsString(data.getProfile());
         } catch (JsonProcessingException exception) {

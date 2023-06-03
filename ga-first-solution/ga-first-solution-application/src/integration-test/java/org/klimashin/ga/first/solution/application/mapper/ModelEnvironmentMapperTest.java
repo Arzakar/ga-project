@@ -6,15 +6,13 @@ import static org.klimashin.ga.first.solution.application.configuration.EasyRand
 import org.klimashin.ga.first.solution.application.IntegrationTest;
 import org.klimashin.ga.first.solution.application.data.ModelEnvironmentData;
 import org.klimashin.ga.first.solution.application.data.condition.ProximityOfTwoObjectsData;
-import org.klimashin.ga.first.solution.application.data.profile.FixedVectorDeviationProfile;
+import org.klimashin.ga.first.solution.application.data.profile.FixedVectorDeviationProfileData;
 import org.klimashin.ga.first.solution.application.entity.CelestialBodyEntity;
 import org.klimashin.ga.first.solution.application.entity.EngineEntity;
 import org.klimashin.ga.first.solution.application.entity.InitialStateEntity;
 import org.klimashin.ga.first.solution.application.entity.OrbitEntity;
 import org.klimashin.ga.first.solution.application.entity.SpacecraftEntity;
-import org.klimashin.ga.first.solution.domain.math.Point;
 import org.klimashin.ga.first.solution.domain.model.Pair;
-import org.klimashin.ga.first.solution.domain.model.PointParticle;
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
@@ -22,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @IntegrationTest
 class ModelEnvironmentMapperTest {
@@ -34,14 +33,14 @@ class ModelEnvironmentMapperTest {
     @Test
     void dataToInitialStateEntity_shouldMap() {
         var data = easyRandom.nextObject(ModelEnvironmentData.class)
-                .setCommandProfile(new FixedVectorDeviationProfile()
-                        .setStartVectorObject(new PointParticle(100, Point.of(1, 1, 1)))
-                        .setEndVectorObject(new PointParticle(200, Point.of(2, 2, 2)))
+                .setCommandProfile(new FixedVectorDeviationProfileData()
+                        .setStartVectorObjectId(UUID.fromString("62799c01-6dd3-486d-b393-d909f90fb015"))
+                        .setEndVectorObjectId(UUID.fromString("c53fe731-21bc-4dcc-ae96-e89d4b31563a"))
                         .setIntervals(Map.of(Pair.of(10, 20), 500d))
                         .setTimeBounds(List.of(Pair.of(10, 20))))
                 .setTargetState(new ProximityOfTwoObjectsData()
-                        .setFirstParticle(new PointParticle(100, Point.of(1, 1, 1)))
-                        .setSecondParticle(new PointParticle(200, Point.of(2, 2, 2)))
+                        .setFirstObjectId(UUID.fromString("62799c01-6dd3-486d-b393-d909f90fb015"))
+                        .setSecondObjectId(UUID.fromString("c53fe731-21bc-4dcc-ae96-e89d4b31563a"))
                         .setRequiredDistance(500d));
         var centralBody = data.getCentralBody();
         var centralBodyOrbit = data.getCentralBody().getOrbit();
@@ -52,22 +51,8 @@ class ModelEnvironmentMapperTest {
 
         var expectedCommandProfilePayload = """
                 {
-                    "startVectorObject": {
-                        "mass": 100.0,
-                        "position": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        }
-                    },
-                    "endVectorObject": {
-                        "mass":200.0,
-                        "position": {
-                            "x": 2.0,
-                            "y": 2.0,
-                            "z": 2.0
-                        }
-                    },
+                    "startVectorObjectId": "62799c01-6dd3-486d-b393-d909f90fb015",
+                    "endVectorObjectId": "c53fe731-21bc-4dcc-ae96-e89d4b31563a",
                     "intervals": {
                         "Pair[leftValue=10, rightValue=20]": 500.0
                     },
@@ -81,22 +66,8 @@ class ModelEnvironmentMapperTest {
                 """;
         var expectedTargetStatePayload = """
                 {
-                    "firstParticle": {
-                        "mass": 100.0,
-                        "position": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        }
-                    },
-                    "secondParticle": {
-                        "mass": 200.0,
-                        "position": {
-                            "x": 2.0,
-                            "y": 2.0,
-                            "z": 2.0
-                        }
-                    },
+                    "firstObjectId": "62799c01-6dd3-486d-b393-d909f90fb015",
+                    "secondObjectId": "c53fe731-21bc-4dcc-ae96-e89d4b31563a",
                     "requiredDistance":500.0
                 }
                 """;

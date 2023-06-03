@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="2023-06-04--01-add-orbits" author="Stepan_Klimashin">
+        <insert tableName="orbit">
+            <column name="id" value="f5d32beb-ba6f-43a9-a4c9-79e40fd38312"/>
+            <column name="semi_major_axis" value="149600000000"/>
+            <column name="eccentricity" value="0.0167086"/>
+            <column name="inclination" value="0.12"/>
+            <column name="longitude_asc_node" value="3.05"/>
+            <column name="perihelion_argument" value="5.03"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2023-06-04--02-add-celestial-bodies" author="Stepan_Klimashin">
+        <insert tableName="celestial_body">
+            <column name="id" value="e83be6b3-298f-447b-9781-6e0cb8041fcb"/>
+            <column name="name" value="Solar"/>
+            <column name="mass" value="1988500000000000000000000000000"/>
+        </insert>
+        <insert tableName="celestial_body">
+            <column name="id" value="3aa2e481-e61f-44c4-8b2d-e6a8825d3468"/>
+            <column name="orbit_id" value="f5d32beb-ba6f-43a9-a4c9-79e40fd38312"/>
+            <column name="name" value="Earth"/>
+            <column name="mass" value="5972200000000000000000000"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2023-06-04--03-add-engines" author="Stepan_Klimashin">
+        <insert tableName="engine">
+            <column name="id" value="e1e3322e-05d3-482f-9fdf-f0c9f1bdaf46"/>
+            <column name="name" value="СПД-140"/>
+            <column name="thrust" value="0.198"/>
+            <column name="fuel_consumption" value="0.000010"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2023-06-04--04-add-spacecrafts" author="Stepan_Klimashin">
+        <insert tableName="spacecraft">
+            <column name="id" value="2fd64b7f-009f-473f-af79-f18022f2106c"/>
+            <column name="dry_mass" value="250"/>
+            <column name="start_fuel_mass" value="100"/>
+            <column name="engine_id" value="e1e3322e-05d3-482f-9fdf-f0c9f1bdaf46"/>
+            <column name="engine_count" value="1"/>
+        </insert>
+    </changeSet>
+    
+    <changeSet id="2023-06-04--05-remove-not-null-constraint" author="Stepan_Klimashin">
+        <dropNotNullConstraint tableName="initial_state" columnName="command_profile_type"/>
+        <dropNotNullConstraint tableName="initial_state" columnName="command_profile_payload"/>
+    </changeSet>
+</databaseChangeLog>

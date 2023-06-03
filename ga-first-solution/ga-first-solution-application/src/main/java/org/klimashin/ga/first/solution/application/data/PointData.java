@@ -1,14 +1,14 @@
-package com.klimashin.ga.first.solution.api.dto;
+package org.klimashin.ga.first.solution.application.data;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Builder
+@Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PositionDtoV1 {
+public class PointData {
 
     Double x;
     Double y;

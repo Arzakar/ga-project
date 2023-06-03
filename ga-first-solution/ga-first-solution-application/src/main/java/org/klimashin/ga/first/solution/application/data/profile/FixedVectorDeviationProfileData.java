@@ -1,7 +1,6 @@
 package org.klimashin.ga.first.solution.application.data.profile;
 
 import org.klimashin.ga.first.solution.domain.model.Pair;
-import org.klimashin.ga.first.solution.domain.model.PointParticle;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
@@ -11,14 +10,15 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Data
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class FixedVectorDeviationProfile implements CommandProfileData {
+public class FixedVectorDeviationProfileData implements CommandProfileData {
 
-    PointParticle startVectorObject;
-    PointParticle endVectorObject;
+    UUID startVectorObjectId;
+    UUID endVectorObjectId;
     Map<Pair, Double> intervals;
     List<Pair> timeBounds;
 
@@ -30,7 +30,7 @@ public class FixedVectorDeviationProfile implements CommandProfileData {
 
     @Override
     @JsonIgnore
-    public FixedVectorDeviationProfile getProfile() {
+    public FixedVectorDeviationProfileData getProfile() {
         return this;
     }
 }
