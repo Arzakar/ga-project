@@ -1,10 +1,10 @@
 package org.klimashin.ga.first.solution.application.controller.v1;
 
+import org.klimashin.ga.first.solution.api.dto.InitialStateRequestDtoV1;
+import org.klimashin.ga.first.solution.api.resource.SolutionResourceV1;
 import org.klimashin.ga.first.solution.application.facade.SolverFacade;
 import org.klimashin.ga.first.solution.application.mapper.InitialStateMapper;
 
-import com.klimashin.ga.first.solution.api.dto.InitialStateRequestDtoV1;
-import com.klimashin.ga.first.solution.api.resource.SolutionResourceV1;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

@@ -1,8 +1,8 @@
 package org.klimashin.ga.first.solution.application.mapper;
 
+import org.klimashin.ga.first.solution.api.dto.VectorDtoV1;
 import org.klimashin.ga.first.solution.application.data.VectorData;
 
-import com.klimashin.ga.first.solution.api.dto.VectorDtoV1;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

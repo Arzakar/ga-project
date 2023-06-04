@@ -1,12 +1,12 @@
 package org.klimashin.ga.first.solution.application.mapper;
 
+import org.klimashin.ga.first.solution.api.dto.InitialStateRequestDtoV1;
 import org.klimashin.ga.first.solution.application.data.condition.ProximityOfTwoObjectsData;
 import org.klimashin.ga.first.solution.application.data.condition.TargetStateData;
 import org.klimashin.ga.first.solution.application.entity.TargetStateType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.klimashin.ga.first.solution.api.dto.InitialStateRequestDtoV1;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
 package org.klimashin.ga.first.solution.application.mapper;
 
+import org.klimashin.ga.first.solution.api.dto.InitialStateRequestDtoV1;
 import org.klimashin.ga.first.solution.application.data.initial.state.InitialStateCreationData;
 import org.klimashin.ga.first.solution.application.data.initial.state.InitialStateData;
 import org.klimashin.ga.first.solution.application.entity.InitialStateEntity;
 
-import com.klimashin.ga.first.solution.api.dto.InitialStateRequestDtoV1;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
