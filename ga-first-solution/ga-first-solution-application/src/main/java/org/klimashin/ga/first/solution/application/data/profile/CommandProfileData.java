@@ -4,5 +4,5 @@ public interface CommandProfileData {
 
     CommandProfileTypeData getType();
 
-    <T extends CommandProfileData> T getProfile();
+    CommandProfileData getProfile();
 }

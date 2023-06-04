@@ -4,5 +4,5 @@ public interface TargetStateData {
 
     TargetStateTypeData getType();
 
-    <T extends TargetStateData> T getState();
+    TargetStateData getState();
 }
