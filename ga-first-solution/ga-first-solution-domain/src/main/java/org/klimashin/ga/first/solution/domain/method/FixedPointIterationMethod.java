@@ -6,7 +6,7 @@ import java.util.function.Function;
 public record FixedPointIterationMethod(Function<Double, Double> function,
                                         double desiredTolerance) {
 
-    static int maxIterations = 100;
+    static final int maxIterations = 100;
 
     public double getSolution(double initialGuess) {
         if (initialGuess == 0) {

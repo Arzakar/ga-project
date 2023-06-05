@@ -2,6 +2,7 @@ package org.klimashin.ga.first.solution.application.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.klimashin.ga.first.solution.application.configuration.EasyRandomConfiguration.defaultEasyRandom;
+import static org.mockito.Mockito.verify;
 
 import org.klimashin.ga.first.solution.application.data.CelestialBodyData;
 import org.klimashin.ga.first.solution.application.entity.CelestialBodyEntity;
@@ -18,10 +19,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class CelestialBodyMapperTest {
 
-    private EasyRandom easyRandom = defaultEasyRandom();
+    private final EasyRandom easyRandom = defaultEasyRandom();
 
     @InjectMocks
-    private CelestialBodyMapper mapper = Mappers.getMapper(CelestialBodyMapper.class);
+    private final CelestialBodyMapper mapper = Mappers.getMapper(CelestialBodyMapper.class);
 
     @Spy
     private OrbitMapper orbitMapper = Mappers.getMapper(OrbitMapper.class);
@@ -44,5 +45,7 @@ class CelestialBodyMapperTest {
                 .returns(orbit.getInclination(), OrbitEntity::getInclination)
                 .returns(orbit.getLongitudeAscNode(), OrbitEntity::getLongitudeAscNode)
                 .returns(orbit.getPerihelionArgument(), OrbitEntity::getPerihelionArgument);
+
+        verify(orbitMapper).dataToEntity(orbit);
     }
 }

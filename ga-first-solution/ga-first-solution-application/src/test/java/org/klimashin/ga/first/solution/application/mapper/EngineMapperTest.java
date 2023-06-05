@@ -11,9 +11,9 @@ import org.mapstruct.factory.Mappers;
 
 class EngineMapperTest {
 
-    private EasyRandom easyRandom = new EasyRandom();
+    private final EasyRandom easyRandom = new EasyRandom();
 
-    private EngineMapper mapper = Mappers.getMapper(EngineMapper.class);
+    private final EngineMapper mapper = Mappers.getMapper(EngineMapper.class);
 
     @Test
     void dataToEntity_shouldMap() {

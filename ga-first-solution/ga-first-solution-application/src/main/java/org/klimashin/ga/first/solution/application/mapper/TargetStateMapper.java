@@ -3,6 +3,7 @@ package org.klimashin.ga.first.solution.application.mapper;
 import org.klimashin.ga.first.solution.api.dto.InitialStateRequestDtoV1;
 import org.klimashin.ga.first.solution.application.data.condition.ProximityOfTwoObjectsData;
 import org.klimashin.ga.first.solution.application.data.condition.TargetStateData;
+import org.klimashin.ga.first.solution.application.entity.InitialStateEntity;
 import org.klimashin.ga.first.solution.application.entity.TargetStateType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,6 +38,23 @@ public abstract class TargetStateMapper {
             return objectMapper.writeValueAsString(data.getState());
         } catch (JsonProcessingException exception) {
             throw new RuntimeException(exception.getMessage());
+        }
+    }
+
+    public TargetStateData initialStateEntityToData(InitialStateEntity entity) {
+        if (Objects.isNull(entity)
+                || Objects.isNull(entity.getTargetStateType())
+                || Objects.isNull(entity.getTargetStatePayload())) {
+            return null;
+        }
+
+        try {
+            return switch (entity.getTargetStateType()) {
+                case PROXIMITY_OF_TWO_OBJECTS ->
+                        objectMapper.readValue(entity.getTargetStatePayload(), ProximityOfTwoObjectsData.class);
+            };
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 

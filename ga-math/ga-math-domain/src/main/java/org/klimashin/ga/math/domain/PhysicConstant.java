@@ -1,6 +1,5 @@
 package org.klimashin.ga.math.domain;
 
-import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.UtilityClass;
 

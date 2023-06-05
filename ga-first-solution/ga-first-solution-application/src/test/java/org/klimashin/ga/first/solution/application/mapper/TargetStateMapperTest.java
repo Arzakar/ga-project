@@ -23,7 +23,7 @@ class TargetStateMapperTest {
     private final EasyRandom easyRandom = defaultEasyRandom();
 
     @InjectMocks
-    private TargetStateMapper mapper = Mappers.getMapper(TargetStateMapper.class);
+    private final TargetStateMapper mapper = Mappers.getMapper(TargetStateMapper.class);
 
     @Spy
     private ObjectMapper objectMapper = new ObjectMapper();

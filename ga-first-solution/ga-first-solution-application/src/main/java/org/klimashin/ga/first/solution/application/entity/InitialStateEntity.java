@@ -75,6 +75,6 @@ public class InitialStateEntity {
     @Column(name = "target_state_payload", columnDefinition = "TEXT", nullable = false)
     String targetStatePayload;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "initialState")
     List<InitialStateCelestialBodyPartEntity> celestialBodies;
 }

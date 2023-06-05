@@ -2,11 +2,8 @@ package org.klimashin.ga.math.domain.systems;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import lombok.val;
 import org.klimashin.ga.math.domain.rungekutta.RkFunction;
 import org.klimashin.ga.math.domain.rungekutta.RkSystemData;
-
-import static org.klimashin.ga.math.domain.PhysicConstant.SOLAR_GRAVITY_PARAMETER;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PontryaginMaximumPrinciple extends RkSystemData {

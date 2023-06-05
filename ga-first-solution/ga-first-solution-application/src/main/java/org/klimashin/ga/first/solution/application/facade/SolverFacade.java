@@ -2,6 +2,8 @@ package org.klimashin.ga.first.solution.application.facade;
 
 import org.klimashin.ga.first.solution.application.data.initial.state.InitialStateData;
 import org.klimashin.ga.first.solution.application.data.initial.state.InitialStateCreationData;
+import org.klimashin.ga.first.solution.application.data.profile.CommandProfileData;
+import org.klimashin.ga.first.solution.application.mapper.CommandProfileMapper;
 import org.klimashin.ga.first.solution.application.service.CelestialBodyService;
 import org.klimashin.ga.first.solution.application.service.InitialStateService;
 import org.klimashin.ga.first.solution.application.service.SpacecraftService;
@@ -11,11 +13,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SolverFacade {
 
+    CommandProfileMapper commandProfileMapper;
     CelestialBodyService celestialBodyService;
     InitialStateService initialStateService;
     SpacecraftService spacecraftService;
@@ -43,5 +48,12 @@ public class SolverFacade {
                 .setTargetState(creationData.getTargetState());
 
         initialStateService.save(initialState);
+    }
+
+    public void loadCommandProfile(UUID initialStateId, CommandProfileData commandProfile) {
+        var commandProfileType = commandProfileMapper.profileDataToProfileTypeEntity(commandProfile);
+        var commandProfilePayload = commandProfileMapper.profileDataToProfilePayloadEntity(commandProfile);
+
+        initialStateService.loadCommandProfile(initialStateId, commandProfileType, commandProfilePayload);
     }
 }

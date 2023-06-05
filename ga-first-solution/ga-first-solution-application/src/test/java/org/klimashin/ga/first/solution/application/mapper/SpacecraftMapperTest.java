@@ -1,7 +1,6 @@
 package org.klimashin.ga.first.solution.application.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.klimashin.ga.first.solution.application.data.SpacecraftData;
 import org.klimashin.ga.first.solution.application.entity.EngineEntity;
@@ -18,10 +17,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class SpacecraftMapperTest {
 
-    private EasyRandom easyRandom = new EasyRandom();
+    private final EasyRandom easyRandom = new EasyRandom();
 
     @InjectMocks
-    private SpacecraftMapper mapper = Mappers.getMapper(SpacecraftMapper.class);
+    private final SpacecraftMapper mapper = Mappers.getMapper(SpacecraftMapper.class);
 
     @Spy
     private EngineMapper engineMapper = Mappers.getMapper(EngineMapper.class);

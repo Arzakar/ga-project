@@ -2,7 +2,6 @@ package org.klimashin.ga.first.solution.domain;
 
 import org.junit.jupiter.api.Test;
 import org.klimashin.ga.first.solution.domain.math.Point;
-import org.klimashin.ga.first.solution.domain.math.Vector;
 import org.klimashin.ga.first.solution.domain.model.CelestialBody;
 import org.klimashin.ga.first.solution.domain.model.Engine;
 import org.klimashin.ga.first.solution.domain.model.Orbit;

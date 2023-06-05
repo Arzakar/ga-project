@@ -11,8 +11,8 @@ import org.mapstruct.factory.Mappers;
 
 class OrbitMapperTest {
 
-    private EasyRandom easyRandom = new EasyRandom();
-    private OrbitMapper mapper = Mappers.getMapper(OrbitMapper.class);
+    private final EasyRandom easyRandom = new EasyRandom();
+    private final OrbitMapper mapper = Mappers.getMapper(OrbitMapper.class);
 
     @Test
     void dataToEntity_shouldMap() {

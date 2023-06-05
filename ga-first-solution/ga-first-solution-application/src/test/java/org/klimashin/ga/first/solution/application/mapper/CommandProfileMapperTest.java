@@ -26,7 +26,7 @@ class CommandProfileMapperTest {
     private final EasyRandom easyRandom = defaultEasyRandom();
 
     @InjectMocks
-    private CommandProfileMapper mapper = Mappers.getMapper(CommandProfileMapper.class);
+    private final CommandProfileMapper mapper = Mappers.getMapper(CommandProfileMapper.class);
 
     @Spy
     private ObjectMapper objectMapper = new ObjectMapper();
