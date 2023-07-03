@@ -1,6 +1,6 @@
-package org.klimashin.ga.first.solution.math.two.dimension.util;
+package org.klimashin.ga.first.solution.math.util;
 
-import org.klimashin.ga.first.solution.math.two.dimension.model.Point2D;
+import org.klimashin.ga.first.solution.math.model.Point2D;
 
 import lombok.experimental.UtilityClass;
 

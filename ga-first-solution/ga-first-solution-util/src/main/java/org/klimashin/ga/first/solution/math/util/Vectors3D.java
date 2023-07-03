@@ -1,7 +1,7 @@
-package org.klimashin.ga.first.solution.math.three.dimension.util;
+package org.klimashin.ga.first.solution.math.util;
 
-import org.klimashin.ga.first.solution.math.three.dimension.model.Point3D;
-import org.klimashin.ga.first.solution.math.three.dimension.model.Vector3D;
+import org.klimashin.ga.first.solution.math.model.Point3D;
+import org.klimashin.ga.first.solution.math.model.Vector3D;
 
 import lombok.experimental.UtilityClass;
 

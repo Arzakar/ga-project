@@ -1,4 +1,4 @@
-package org.klimashin.ga.first.solution.math.three.dimension.model;
+package org.klimashin.ga.first.solution.math.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,24 +12,22 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Point3D {
+public class Point2D {
 
     double x;
     double y;
-    double z;
 
-    public static Point3D of(double x, double y, double z) {
-        return new Point3D(x, y, z);
+    public static Point2D of(double x, double y) {
+        return new Point2D(x, y);
     }
 
-    public Point3D move(Vector3D vector) {
+    public Point2D move(Vector2D vector) {
         this.x += vector.getX();
         this.y += vector.getY();
-        this.z += vector.getZ();
         return this;
     }
 
-    public Point3D copy() {
-        return new Point3D(this.x, this.y, this.z);
+    public Point2D copy() {
+        return new Point2D(this.x, this.y);
     }
 }
