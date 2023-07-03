@@ -2,9 +2,10 @@ package org.klimashin.ga.first.solution.domain.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.withPrecision;
+import static org.klimashin.ga.first.solution.domain.TestUtils.testRound;
 
-import org.klimashin.ga.first.solution.domain.math.Point;
 import org.klimashin.ga.first.solution.domain.model.PointParticle;
+import org.klimashin.ga.first.solution.util.math.model.Point2D;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +27,8 @@ class PhysicsTest {
 
     @Test
     void gravitationForceMagnitude_shouldReturnScalarForceValue() {
-        var firstPoint = new Point(2, 3, 4);
-        var secondPoint = new Point(5, 6, 7);
+        var firstPoint = Point2D.of(2, 3);
+        var secondPoint = Point2D.of(5, 6);
         var firstParticle = new PointParticle(100, firstPoint);
         var secondParticle = new PointParticle(200, secondPoint);
 
@@ -38,17 +39,16 @@ class PhysicsTest {
 
     @Test
     void gravitationForce_shouldReturnGravitationForceVector() {
-        var firstPoint = new Point(2, 3, 4);
-        var secondPoint = new Point(5, 6, 7);
+        var firstPoint = Point2D.of(2, 3);
+        var secondPoint = Point2D.of(5, 6);
         var firstParticle = new PointParticle(100, firstPoint);
         var secondParticle = new PointParticle(200, secondPoint);
 
         var result = Physics.gravitationForce(firstParticle, secondParticle);
 
-        var precision = Math.pow(10, 15);
+        var precision = 15;
         assertThat(result)
-                .returns(0.000_000_028_543_770, value -> Math.round(value.getX() * precision) / precision)
-                .returns(0.000_000_028_543_770, value -> Math.round(value.getY() * precision) / precision)
-                .returns(0.000_000_028_543_770, value -> Math.round(value.getZ() * precision) / precision);
+                .returns(0.000_000_028_543_770, value -> testRound(value.getX(), precision))
+                .returns(0.000_000_028_543_770, value -> testRound(value.getY(), precision));
     }
 }

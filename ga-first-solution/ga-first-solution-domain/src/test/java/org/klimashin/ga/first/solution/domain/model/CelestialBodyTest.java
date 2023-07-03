@@ -2,8 +2,9 @@ package org.klimashin.ga.first.solution.domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.withPrecision;
+import static org.klimashin.ga.first.solution.domain.TestUtils.testRound;
 
-import org.klimashin.ga.first.solution.domain.TestUtil;
+import org.klimashin.ga.first.solution.domain.TestUtils;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ class CelestialBodyTest {
 
     @Test
     void move_shouldMove() {
-        var orbit = TestUtil.orbitGenerator()
+        var orbit = TestUtils.orbitGenerator()
                 .withSemiMajorAxis(50d)
                 .withEccentricity(0.3)
                 .withPerihelionArgument(0)
@@ -20,34 +21,33 @@ class CelestialBodyTest {
                 .withZeroEpoch(0)
                 .generate();
 
-        var celestialBody = TestUtil.celestialBodyGenerator()
+        var celestialBody = TestUtils.celestialBodyGenerator()
                 .withMass(100d)
                 .withOrbit(orbit)
                 .generate();
 
         var result = celestialBody.move(100);
 
-        var precision = Math.pow(10, 9);
+        var precision = 9;
         assertThat(result)
                 .isSameAs(celestialBody)
                 .extracting(CelestialBody::getPosition)
-                .returns(-0.004_015_477, value -> Math.round(value.getX() * precision) / precision)
-                .returns(45.501_204_466, value -> Math.round(value.getY() * precision) / precision)
-                .returns(0d, value -> Math.round(value.getZ() * precision) / precision);
+                .returns(-0.004_015_477, value -> testRound(value.getX(), precision))
+                .returns(45.501_204_466, value -> testRound(value.getY(), precision));
 
         assertThat(result)
                 .extracting(CelestialBody::getOrbit)
-                .returns(1.570_884_577, value -> Math.round(value.getTrueAnomaly() * precision) / precision);
+                .returns(1.570_884_577, value -> testRound(value.getTrueAnomaly(), precision));
     }
 
     @Test
     void getMeanMotion_shouldReturnMeanMotion() {
-        var orbit = TestUtil.orbitGenerator()
+        var orbit = TestUtils.orbitGenerator()
                 .withAttractingBodyMass(1000d)
                 .withSemiMajorAxis(50d)
                 .generate();
 
-        var celestialBody = TestUtil.celestialBodyGenerator()
+        var celestialBody = TestUtils.celestialBodyGenerator()
                 .withMass(100d)
                 .withOrbit(orbit)
                 .generate();
@@ -59,13 +59,13 @@ class CelestialBodyTest {
 
     @Test
     void getMeanAnomaly_shouldReturnMeanAnomaly() {
-        var orbit = TestUtil.orbitGenerator()
+        var orbit = TestUtils.orbitGenerator()
                 .withAttractingBodyMass(1000d)
                 .withSemiMajorAxis(50d)
                 .withZeroEpoch(0)
                 .generate();
 
-        var celestialBody = TestUtil.celestialBodyGenerator()
+        var celestialBody = TestUtils.celestialBodyGenerator()
                 .withMass(100d)
                 .withOrbit(orbit)
                 .generate();
@@ -77,14 +77,14 @@ class CelestialBodyTest {
 
     @Test
     void getEccentricAnomaly_shouldReturnEccentricAnomaly() {
-        var orbit = TestUtil.orbitGenerator()
+        var orbit = TestUtils.orbitGenerator()
                 .withSemiMajorAxis(50d)
                 .withEccentricity(0.3)
                 .withAttractingBodyMass(1000d)
                 .withZeroEpoch(0)
                 .generate();
 
-        var celestialBody = TestUtil.celestialBodyGenerator()
+        var celestialBody = TestUtils.celestialBodyGenerator()
                 .withMass(100d)
                 .withOrbit(orbit)
                 .generate();

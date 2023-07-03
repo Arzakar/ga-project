@@ -1,4 +1,4 @@
-package org.klimashin.ga.first.solution.util;
+package org.klimashin.ga.first.solution.util.util;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

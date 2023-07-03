@@ -1,17 +1,19 @@
 package org.klimashin.ga.first.solution.domain.model.profile;
 
-import org.klimashin.ga.first.solution.domain.model.LongPair;
-import org.klimashin.ga.first.solution.domain.math.Vector;
 import org.klimashin.ga.first.solution.domain.model.PointParticle;
-import org.klimashin.ga.first.solution.domain.util.Vectors;
+import org.klimashin.ga.first.solution.util.math.model.Vector2D;
+import org.klimashin.ga.first.solution.util.math.util.Vectors;
+import org.klimashin.ga.first.solution.util.util.ComparablePair;
+import org.klimashin.ga.first.solution.util.util.LongPair;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -19,50 +21,52 @@ public class FixedVectorDeviationCommandProfile implements CommandProfile {
 
     PointParticle startVectorObject;
     PointParticle endVectorObject;
-    Map<LongPair, Double> intervals;
-    List<LongPair> timeBounds;
+    SortedMap<LongPair, Double> intervals = new TreeMap<>(ComparablePair::compareByLeftTo);
 
     public FixedVectorDeviationCommandProfile(PointParticle startVectorObject,
                                               PointParticle endVectorObject,
                                               Map<LongPair, Double> intervals) {
         this.startVectorObject = startVectorObject;
         this.endVectorObject = endVectorObject;
-        this.intervals = intervals;
-        this.timeBounds = this.intervals.keySet().stream()
-                .sorted(LongPair::compareToByLeftValue)
-                .toList();
+        this.intervals.putAll(intervals);
 
-        validateTimeBounds(timeBounds);
+        validateIntervals(intervals);
     }
 
-    public Vector getThrustForceDirection(final long currentTime) {
-        var lastPair = timeBounds.get(timeBounds.size() - 1);
-        var angle = timeBounds.stream()
-                .filter(pair -> currentTime >= pair.leftValue() && currentTime < pair.rightValue())
+    @Override
+    public Vector2D getThrustForceDirection(final long currentTime) {
+        var angle = intervals.keySet().stream()
+                .filter(pair -> currentTime >= pair.getLeft() && currentTime < pair.getRight())
                 .findFirst()
-                .or(() -> currentTime >= lastPair.rightValue() ? Optional.of(lastPair) : Optional.empty())
+                .or(() -> currentTime >= intervals.lastKey().getRight()
+                        ? Optional.of(intervals.lastKey())
+                        : Optional.empty())
                 .map(intervals::get)
                 .orElseThrow(() -> new RuntimeException(String.format("""
                         В таблице временных интервалов управления отсутствует интервал,
                         содержащий текущее время, равное %d
                         """, currentTime)));
 
-        return Vectors.between(startVectorObject, endVectorObject)
+        return Vectors.between(startVectorObject.getPosition(), endVectorObject.getPosition())
                 .toUnit()
-                .rotateByZ(angle);
+                .rotate(angle);
     }
 
-    public void validateTimeBounds(List<LongPair> timeBounds) {
-        for (int i = 0; i < timeBounds.size() - 1; i++) {
-            var leftBound = timeBounds.get(i);
-            var rightBound = timeBounds.get(i + 1);
+    private void validateIntervals(Map<LongPair, Double> intervals) {
+        var pairs = intervals.keySet().stream()
+                .sorted(LongPair::compareByLeftTo)
+                .toList();
 
-            if (leftBound.rightValue() > rightBound.leftValue()) {
+        for (int i = 0; i < pairs.size() - 1; i++) {
+            var leftBound = pairs.get(i);
+            var rightBound = pairs.get(i + 1);
+
+            if (leftBound.getRight() > rightBound.getLeft()) {
                 throw new IllegalArgumentException(String.format("""
                         Ошибка в таблице временных интервалов управления.
                         Конечная граница интервала %d равна %d и больше начальной границы
                         интервала %d, которая равна %d.
-                        """, i, leftBound.rightValue(), i + 1, rightBound.leftValue()));
+                        """, i, leftBound.getRight(), i + 1, rightBound.getLeft()));
             }
         }
     }

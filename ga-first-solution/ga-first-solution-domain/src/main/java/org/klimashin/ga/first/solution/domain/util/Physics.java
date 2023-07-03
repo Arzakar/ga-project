@@ -1,7 +1,9 @@
 package org.klimashin.ga.first.solution.domain.util;
 
 import org.klimashin.ga.first.solution.domain.model.PointParticle;
-import org.klimashin.ga.first.solution.domain.math.Vector;
+import org.klimashin.ga.first.solution.util.math.model.Vector2D;
+import org.klimashin.ga.first.solution.util.math.util.Points;
+import org.klimashin.ga.first.solution.util.math.util.Vectors;
 
 import lombok.experimental.UtilityClass;
 
@@ -19,12 +21,12 @@ public class Physics {
     }
 
     public static double gravitationForceMagnitude(PointParticle firstParticle, PointParticle secondParticle) {
-        var distance = PointParticles.distanceBetween(firstParticle, secondParticle);
+        var distance = Points.distanceBetween(firstParticle.getPosition(), secondParticle.getPosition());
         return G * ((firstParticle.getMass() * secondParticle.getMass()) / Math.pow(distance, 2));
     }
 
-    public static Vector gravitationForce(PointParticle gravitatingBody, PointParticle attractiveBody) {
-        return Vectors.between(gravitatingBody, attractiveBody)
+    public static Vector2D gravitationForce(PointParticle gravitatingBody, PointParticle attractiveBody) {
+        return Vectors.between(gravitatingBody.getPosition(), attractiveBody.getPosition())
                 .toUnit()
                 .multiply(Physics.gravitationForceMagnitude(gravitatingBody, attractiveBody));
     }

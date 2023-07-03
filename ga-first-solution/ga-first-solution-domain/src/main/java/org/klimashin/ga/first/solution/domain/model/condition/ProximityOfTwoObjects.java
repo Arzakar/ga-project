@@ -1,13 +1,13 @@
 package org.klimashin.ga.first.solution.domain.model.condition;
 
 import org.klimashin.ga.first.solution.domain.model.PointParticle;
-import org.klimashin.ga.first.solution.domain.util.PointParticles;
+import org.klimashin.ga.first.solution.util.math.util.Points;
 
 public record ProximityOfTwoObjects(PointParticle firstParticle,
                                     PointParticle secondParticle,
                                     double requiredDistance) implements TargetState {
 
     public boolean isAchieved() {
-        return PointParticles.distanceBetween(firstParticle, secondParticle) < requiredDistance;
+        return Points.distanceBetween(firstParticle.getPosition(), secondParticle.getPosition()) < requiredDistance;
     }
 }

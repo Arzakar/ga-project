@@ -1,8 +1,7 @@
 package org.klimashin.ga.first.solution.domain.model;
 
-import org.klimashin.ga.first.solution.domain.math.Point;
-import org.klimashin.ga.first.solution.domain.math.Vector;
-import org.klimashin.ga.first.solution.math.two.dimension.model.Point2D;
+import org.klimashin.ga.first.solution.util.math.model.Point2D;
+import org.klimashin.ga.first.solution.util.math.model.Vector2D;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,8 +15,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Spacecraft extends PointParticle {
 
-    final Vector speed;
-    Vector acceleration;
+    final Vector2D speed;
     double fuelMass;
     final Engine engine;
     final int engineCount;
@@ -26,21 +24,22 @@ public class Spacecraft extends PointParticle {
         return new SpacecraftBuilder();
     }
 
-    private Spacecraft(double mass, Point2D position, Vector speed, Vector acceleration,
+    private Spacecraft(double mass, Point2D position, Vector2D speed,
                        double fuelMass, Engine engine, int engineCount) {
         this.mass = mass;
         this.position = position;
         this.speed = speed;
-        this.acceleration = acceleration;
         this.fuelMass = fuelMass;
         this.engine = engine;
         this.engineCount = engineCount;
     }
 
-    public Spacecraft changeDynamicState(Vector force, double deltaTime) {
-        acceleration = force.copy().divide(mass);
+    public Spacecraft move(Vector2D force, double deltaTime) {
+        var acceleration = force.copy().divide(mass);
+
         speed.add(acceleration.copy().multiply(deltaTime));
         position.move(speed.copy().multiply(deltaTime));
+
         return this;
     }
 
@@ -62,9 +61,8 @@ public class Spacecraft extends PointParticle {
     public static class SpacecraftBuilder {
 
         double mass;
-        Point position;
-        Vector speed;
-        Vector acceleration;
+        Point2D position;
+        Vector2D speed;
         double fuelMass;
         Engine engine;
         int engineCount;
@@ -74,7 +72,7 @@ public class Spacecraft extends PointParticle {
                 throw new IllegalArgumentException("Масса топлива не может быть больше или равной массе КА");
             }
 
-            return new Spacecraft(mass, position, speed, acceleration, fuelMass, engine, engineCount);
+            return new Spacecraft(mass, position, speed, fuelMass, engine, engineCount);
         }
     }
 }

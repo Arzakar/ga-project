@@ -1,4 +1,4 @@
-package org.klimashin.ga.first.solution.util;
+package org.klimashin.ga.first.solution.util.util;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class ComparablePair<L extends Comparable<L>, R extends Comparable<R>> {
 
     L left;

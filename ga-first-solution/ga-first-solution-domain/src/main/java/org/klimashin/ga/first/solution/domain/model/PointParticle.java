@@ -1,6 +1,6 @@
 package org.klimashin.ga.first.solution.domain.model;
 
-import org.klimashin.ga.first.solution.math.two.dimension.model.Point2D;
+import org.klimashin.ga.first.solution.util.math.model.Point2D;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

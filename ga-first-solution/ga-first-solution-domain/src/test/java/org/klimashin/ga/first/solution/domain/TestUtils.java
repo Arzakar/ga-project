@@ -1,11 +1,11 @@
 package org.klimashin.ga.first.solution.domain;
 
-import org.klimashin.ga.first.solution.domain.math.Point;
-import org.klimashin.ga.first.solution.domain.math.Vector;
 import org.klimashin.ga.first.solution.domain.model.CelestialBody;
 import org.klimashin.ga.first.solution.domain.model.Engine;
 import org.klimashin.ga.first.solution.domain.model.Orbit;
 import org.klimashin.ga.first.solution.domain.model.Spacecraft;
+import org.klimashin.ga.first.solution.util.math.model.Point2D;
+import org.klimashin.ga.first.solution.util.math.model.Vector2D;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -15,9 +15,14 @@ import lombok.experimental.UtilityClass;
 import org.jeasy.random.EasyRandom;
 
 @UtilityClass
-public class TestUtil {
+public class TestUtils {
 
     private final EasyRandom easyRandom = new EasyRandom();
+
+    public static double testRound(double value, int precision) {
+        var rate = Math.pow(10, precision);
+        return Math.round(value * rate) / rate;
+    }
 
     public CelestialBodyGenerator celestialBodyGenerator() {
         var mass = easyRandom.nextDouble(100d);
@@ -47,9 +52,8 @@ public class TestUtil {
 
         return SpacecraftGenerator.builder()
                 .mass(mass)
-                .position(easyRandom.nextObject(Point.class))
-                .speed(easyRandom.nextObject(Vector.class))
-                .acceleration(easyRandom.nextObject(Vector.class))
+                .position(easyRandom.nextObject(Point2D.class))
+                .speed(easyRandom.nextObject(Vector2D.class))
                 .fuelMass(mass / 2)
                 .engine(Engine.builder()
                         .thrust(easyRandom.nextDouble(0, 100d))
@@ -111,9 +115,9 @@ public class TestUtil {
     public static class SpacecraftGenerator {
 
         double mass;
-        Point position;
-        Vector speed;
-        Vector acceleration;
+        Point2D position;
+        Vector2D speed;
+        Vector2D acceleration;
         double fuelMass;
         Engine engine;
         int engineCount;
@@ -123,7 +127,6 @@ public class TestUtil {
                     .mass(this.mass)
                     .position(this.position)
                     .speed(this.speed)
-                    .acceleration(this.acceleration)
                     .fuelMass(this.fuelMass)
                     .engine(this.engine)
                     .engineCount(this.engineCount)

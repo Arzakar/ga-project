@@ -2,6 +2,9 @@ package org.klimashin.ga.first.solution.math.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.klimashin.ga.first.solution.util.math.model.Point3D;
+import org.klimashin.ga.first.solution.util.math.model.Vector3D;
+
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 

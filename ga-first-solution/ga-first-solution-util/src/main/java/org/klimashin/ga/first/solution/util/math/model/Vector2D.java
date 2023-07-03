@@ -1,4 +1,4 @@
-package org.klimashin.ga.first.solution.math.model;
+package org.klimashin.ga.first.solution.util.math.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

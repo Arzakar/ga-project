@@ -2,13 +2,12 @@ package org.klimashin.ga.first.solution.domain.model;
 
 import static org.klimashin.ga.first.solution.domain.util.Physics.G;
 
-
-import org.klimashin.ga.first.solution.domain.math.Point;
-import org.klimashin.ga.first.solution.domain.math.Vector;
 import org.klimashin.ga.first.solution.domain.method.FixedPointIterationMethod;
 import org.klimashin.ga.first.solution.domain.util.Orbits;
 import org.klimashin.ga.first.solution.domain.util.Physics;
-import org.klimashin.ga.first.solution.math.two.dimension.model.Point2D;
+import org.klimashin.ga.first.solution.util.math.model.Point2D;
+import org.klimashin.ga.first.solution.util.math.model.Vector2D;
+import org.klimashin.ga.first.solution.util.math.util.Vectors;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,29 +36,29 @@ public class CelestialBody extends PointParticle {
     }
 
     public CelestialBody move(long deltaTime) {
-        var meanMotion = getMeanMotion();
-        var eccentricity = orbit.getEccentricity();
+        var meanMotion = this.getMeanMotion();
+        var eccentricity = this.orbit.getEccentricity();
 
         var currentEccentricAnomaly = Orbits.extractEccentricAnomaly(orbit);
         var timeFromPerihelionEpoch = Math.round((currentEccentricAnomaly - eccentricity * Math.sin(currentEccentricAnomaly)) / meanMotion);
 
-        var nextEccentricAnomaly = getEccentricAnomaly(timeFromPerihelionEpoch + deltaTime);
+        var nextEccentricAnomaly = this.getEccentricAnomaly(timeFromPerihelionEpoch + deltaTime);
         var nextTrueAnomaly = Orbits.calculateTrueAnomaly(nextEccentricAnomaly, eccentricity);
         var nextPosition = Orbits.calculatePosition(this.orbit, nextEccentricAnomaly);
+        var moveVector = Vectors.between(this.position, nextPosition);
 
         orbit.setTrueAnomaly(nextTrueAnomaly);
-        position.change(nextPosition);
+        position.move(moveVector);
 
         return this;
     }
 
-    public Vector getSpeed() {
+    public Vector2D getSpeed() {
         var rate = Math.sqrt(G * orbit.getAttractingBodyMass() / orbit.getFocalParameter());
         var radialSpeed = rate * orbit.getEccentricity() * Math.sin(orbit.getTrueAnomaly());
         var transversalSpeed = rate * (1 + orbit.getEccentricity() * Math.cos(orbit.getTrueAnomaly()));
 
-        return Vector.of(radialSpeed, transversalSpeed, 0)
-                .rotateByZ(orbit.getTrueAnomaly());
+        return Vector2D.of(radialSpeed, transversalSpeed).rotate(orbit.getTrueAnomaly());
     }
 
     public double getMeanMotion() {

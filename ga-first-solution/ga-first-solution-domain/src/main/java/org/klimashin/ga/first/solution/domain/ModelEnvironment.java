@@ -7,7 +7,7 @@ import org.klimashin.ga.first.solution.domain.model.PointParticle;
 import org.klimashin.ga.first.solution.domain.model.Spacecraft;
 import org.klimashin.ga.first.solution.domain.model.condition.TargetState;
 import org.klimashin.ga.first.solution.domain.model.profile.CommandProfile;
-import org.klimashin.ga.first.solution.domain.util.PointParticles;
+import org.klimashin.ga.first.solution.util.math.util.Points;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -34,7 +34,7 @@ public class ModelEnvironment {
 
     public ModelEnvironment copy() {
         return ModelEnvironment.builder()
-                .centralBody(new PointParticle(centralBody.getMass(), PointParticles.copy(centralBody.getPosition())))
+                .centralBody(new PointParticle(centralBody.getMass(), Points.copy(centralBody.getPosition())))
                 .celestialBodies(celestialBodies.stream()
                         .map(celestialBody -> CelestialBody.builder()
                                 .mass(celestialBody.getMass())
@@ -55,7 +55,6 @@ public class ModelEnvironment {
                         .mass(spacecraft.getMass())
                         .position(spacecraft.getPosition().copy())
                         .speed(spacecraft.getSpeed().copy())
-                        .acceleration(spacecraft.getAcceleration().copy())
                         .fuelMass(spacecraft.getFuelMass())
                         .engine(Engine.builder()
                                 .thrust(spacecraft.getEngine().getThrust())

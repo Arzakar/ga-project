@@ -1,7 +1,7 @@
 package org.klimashin.ga.first.solution.domain;
 
 import org.klimashin.ga.first.solution.domain.util.Physics;
-import org.klimashin.ga.first.solution.domain.util.Vectors;
+import org.klimashin.ga.first.solution.util.math.model.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ public record Modeler(ModelEnvironment environment) {
             var gravitationForce = Physics.gravitationForce(environment.getSpacecraft(), environment.getCentralBody());
             var thrustForce = environment.getSpacecraft().getFuelMass() > 0
                     ? environment.getCommandProfile().getThrustForceDirection(seconds).multiply(environment.getSpacecraft().getEngineSystemThrust())
-                    : Vectors.zero();
+                    : Vector2D.zero();
 
-            var sumForce = Vectors.zero()
+            var sumForce = Vector2D.zero()
                     .add(gravitationForce)
                     .add(thrustForce);
 
-            environment.getSpacecraft().changeDynamicState(sumForce, deltaTime);
+            environment.getSpacecraft().move(sumForce, deltaTime);
             environment.getSpacecraft().reduceFuel(deltaTime);
             environment.getCelestialBodies().forEach(celestialBody -> celestialBody.move(deltaTime));
 
@@ -55,13 +55,13 @@ public record Modeler(ModelEnvironment environment) {
             var gravitationForce = Physics.gravitationForce(environment.getSpacecraft(), environment.getCentralBody());
             var thrustForce = environment.getSpacecraft().getFuelMass() > 0
                     ? environment.getCommandProfile().getThrustForceDirection(seconds).multiply(environment.getSpacecraft().getEngineSystemThrust())
-                    : Vectors.zero();
+                    : Vector2D.zero();
 
-            var sumForce = Vectors.zero()
+            var sumForce = Vector2D.zero()
                     .add(gravitationForce)
                     .add(thrustForce);
 
-            environment.getSpacecraft().changeDynamicState(sumForce, deltaTime);
+            environment.getSpacecraft().move(sumForce, deltaTime);
             environment.getSpacecraft().reduceFuel(deltaTime);
             environment.getCelestialBodies().forEach(celestialBody -> celestialBody.move(deltaTime));
 

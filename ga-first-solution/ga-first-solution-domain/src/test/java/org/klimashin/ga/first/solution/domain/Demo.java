@@ -1,16 +1,16 @@
 package org.klimashin.ga.first.solution.domain;
 
 import org.junit.jupiter.api.Test;
-import org.klimashin.ga.first.solution.domain.math.Point;
+
 import org.klimashin.ga.first.solution.domain.model.CelestialBody;
 import org.klimashin.ga.first.solution.domain.model.Engine;
 import org.klimashin.ga.first.solution.domain.model.Orbit;
-import org.klimashin.ga.first.solution.domain.model.LongPair;
 import org.klimashin.ga.first.solution.domain.model.PointParticle;
 import org.klimashin.ga.first.solution.domain.model.Spacecraft;
 import org.klimashin.ga.first.solution.domain.model.condition.ProximityOfTwoObjects;
 import org.klimashin.ga.first.solution.domain.model.profile.FixedVectorDeviationCommandProfile;
-import org.klimashin.ga.first.solution.domain.util.Vectors;
+import org.klimashin.ga.first.solution.util.math.model.Point2D;
+import org.klimashin.ga.first.solution.util.util.LongPair;
 
 import java.time.Duration;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.Map;
 class Demo {
 
     private ModelEnvironment prepareEnvironment() {
-        var solar = new PointParticle(1.9885 * Math.pow(10, 30), Point.of(0, 0, 0));
+        var solar = new PointParticle(1.9885 * Math.pow(10, 30), Point2D.of(0, 0));
         var earth = CelestialBody.builder()
                 .mass(5.9722 * Math.pow(10, 24))
                 .orbit(Orbit.builder()
@@ -36,9 +36,8 @@ class Demo {
                 .build();
         var spacecraft = Spacecraft.builder()
                 .mass(350)
-                .position(Point.of(earth.getPosition().getX() - Math.pow(10, 9), 0, 0))
+                .position(Point2D.of(earth.getPosition().getX() - Math.pow(10, 9), 0))
                 .speed(earth.getSpeed())
-                .acceleration(Vectors.zero())
                 .fuelMass(100)
                 .engine(Engine.builder()
                         .thrust(0.198)
@@ -47,7 +46,7 @@ class Demo {
                 .engineCount(1)
                 .build();
         var intervals = Map.of(
-                LongPair.of(0, Duration.ofDays(50).toSeconds()), Math.toRadians(-62),
+                LongPair.of(0L, Duration.ofDays(50).toSeconds()), Math.toRadians(-62),
                 LongPair.of(Duration.ofDays(50).toSeconds(), Duration.ofDays(142).toSeconds()), Math.toRadians(52)
         );
         var commandProfile = new FixedVectorDeviationCommandProfile(spacecraft, solar, intervals);

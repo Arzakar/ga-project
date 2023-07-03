@@ -3,9 +3,9 @@ package org.klimashin.ga.first.solution.domain.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import org.klimashin.ga.first.solution.domain.TestUtil;
-import org.klimashin.ga.first.solution.domain.math.Point;
-import org.klimashin.ga.first.solution.domain.math.Vector;
+import org.klimashin.ga.first.solution.domain.TestUtils;
+import org.klimashin.ga.first.solution.util.math.model.Point2D;
+import org.klimashin.ga.first.solution.util.math.model.Vector2D;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,30 +15,28 @@ class SpacecraftTest {
     void buildSpacecraft_shouldThrowException() {
         assertThatIllegalArgumentException().isThrownBy(() -> Spacecraft.builder()
                 .mass(10d)
-                .position(new Point(0, 0, 0))
-                .speed(new Vector(0, 0, 0))
-                .acceleration(new Vector(0, 0, 0))
+                .position(Point2D.of(0, 0))
+                .speed(Vector2D.of(0, 0))
                 .fuelMass(20d)
                 .engine(new Engine(10, 10))
                 .engineCount(2)
                 .build());
     }
 
-    //@Test
-    void changeDynamicState_shouldChangeDynamicState() {
+    @Test
+    void move_shouldMoveSpacecraft() {
         var spacecraft = Spacecraft.builder()
-                .position(new Point(10, 10, 10))
-                .speed(new Vector(5, 0, 0))
-                .acceleration(new Vector(0, 5, 10))
+                .position(Point2D.of(10, 10))
+                .speed(Vector2D.of(5, 0))
                 .fuelMass(50d)
                 .mass(100d)
                 .engine(null)
                 .engineCount(0)
                 .build();
 
-        var forceVector = new Vector(5, 3, 1);
+        var forceVector = Vector2D.of(5, 3);
 
-        var result = spacecraft.changeDynamicState(forceVector, 2);
+        var result = spacecraft.move(forceVector, 2);
 
         assertThat(result)
                 .isSameAs(spacecraft)
@@ -48,29 +46,21 @@ class SpacecraftTest {
                 .returns(0, Spacecraft::getEngineCount);
 
         assertThat(result.getPosition())
-                .returns(2020d, Point::getX)
-                .returns(1210d, Point::getY)
-                .returns(410d, Point::getZ);
+                .returns(2020d, Point2D::getX)
+                .returns(1210d, Point2D::getY);
 
         assertThat(result.getSpeed())
-                .returns(1005d, Vector::getX)
-                .returns(600d, Vector::getY)
-                .returns(200d, Vector::getZ);
-
-        assertThat(result.getAcceleration())
-                .returns(500d, Vector::getX)
-                .returns(300d, Vector::getY)
-                .returns(100d, Vector::getZ);
+                .returns(1005d, Vector2D::getX)
+                .returns(600d, Vector2D::getY);
 
         assertThat(forceVector)
-                .returns(5d, Vector::getX)
-                .returns(3d, Vector::getY)
-                .returns(1d, Vector::getZ);
+                .returns(5d, Vector2D::getX)
+                .returns(3d, Vector2D::getY);
     }
 
     @Test
     void getEngineSystemThrust_shouldReturnEngineSystemThrust() {
-        var spacecraft = TestUtil.spacecraftGenerator()
+        var spacecraft = TestUtils.spacecraftGenerator()
                 .withEngine(new Engine(10, 10))
                 .withEngineCount(2)
                 .generate();
@@ -83,9 +73,8 @@ class SpacecraftTest {
     @Test
     void reduceFuel_shouldReduceFuel() {
         var spacecraft = Spacecraft.builder()
-                .position(new Point(10, 10, 10))
-                .speed(new Vector(5, 0, 0))
-                .acceleration(new Vector(0, 5, 10))
+                .position(Point2D.of(10, 10))
+                .speed(Vector2D.of(5, 0))
                 .fuelMass(50d)
                 .mass(100d)
                 .engine(new Engine(10, 10))
@@ -101,19 +90,12 @@ class SpacecraftTest {
                 .returns(2, Spacecraft::getEngineCount);
 
         assertThat(result.getPosition())
-                .returns(10d, Point::getX)
-                .returns(10d, Point::getY)
-                .returns(10d, Point::getZ);
+                .returns(10d, Point2D::getX)
+                .returns(10d, Point2D::getY);
 
         assertThat(result.getSpeed())
-                .returns(5d, Vector::getX)
-                .returns(0d, Vector::getY)
-                .returns(0d, Vector::getZ);
-
-        assertThat(result.getAcceleration())
-                .returns(0d, Vector::getX)
-                .returns(5d, Vector::getY)
-                .returns(10d, Vector::getZ);
+                .returns(5d, Vector2D::getX)
+                .returns(0d, Vector2D::getY);
 
         assertThat(result.getEngine())
                 .returns(10d, Engine::getThrust)

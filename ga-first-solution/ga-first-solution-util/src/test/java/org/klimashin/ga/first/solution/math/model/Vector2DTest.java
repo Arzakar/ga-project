@@ -2,7 +2,9 @@ package org.klimashin.ga.first.solution.math.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.withPrecision;
-import static org.klimashin.ga.first.solution.utils.TestUtils.round;
+import static org.klimashin.ga.first.solution.TestUtils.round;
+
+import org.klimashin.ga.first.solution.util.math.model.Vector2D;
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;

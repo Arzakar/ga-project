@@ -1,4 +1,4 @@
-package org.klimashin.ga.first.solution.utils;
+package org.klimashin.ga.first.solution;
 
 import lombok.experimental.UtilityClass;
 

@@ -1,8 +1,8 @@
 package org.klimashin.ga.first.solution.domain.util;
 
-import org.klimashin.ga.first.solution.domain.math.Point;
-import org.klimashin.ga.first.solution.domain.math.Vector;
 import org.klimashin.ga.first.solution.domain.model.Orbit;
+import org.klimashin.ga.first.solution.util.math.model.Point2D;
+import org.klimashin.ga.first.solution.util.math.model.Vector2D;
 
 import lombok.experimental.UtilityClass;
 
@@ -23,23 +23,17 @@ public class Orbits {
         return Math.atan(rate * Math.tan(eccentricAnomaly / 2)) * 2;
     }
 
-    public Point calculatePosition(Orbit orbit) {
+    public Point2D calculatePosition(Orbit orbit) {
         var eccentricAnomaly = calculateEccentricAnomaly(orbit.getTrueAnomaly(), orbit.getEccentricity());
 
-        var x = orbit.getSemiMajorAxis() * (Math.cos(eccentricAnomaly) - orbit.getEccentricity());
-        var y = orbit.getSemiMajorAxis() * Math.sqrt(1 - Math.pow(orbit.getEccentricity(), 2)) * Math.sin(eccentricAnomaly);
-
-        return Vector.of(x, y, 0)
-                .rotateByZ(orbit.getPerihelionArgument())
-                .toPoint();
+        return calculatePosition(orbit, eccentricAnomaly);
     }
 
-    public Point calculatePosition(Orbit orbit, double eccentricAnomaly) {
+    public Point2D calculatePosition(Orbit orbit, double eccentricAnomaly) {
         var x = orbit.getSemiMajorAxis() * (Math.cos(eccentricAnomaly) - orbit.getEccentricity());
         var y = orbit.getSemiMajorAxis() * Math.sqrt(1 - Math.pow(orbit.getEccentricity(), 2)) * Math.sin(eccentricAnomaly);
+        var newRadiusVector = Vector2D.of(x, y).rotate(orbit.getPerihelionArgument());
 
-        return Vector.of(x, y, 0)
-                .rotateByZ(orbit.getPerihelionArgument())
-                .toPoint();
+        return Point2D.of(newRadiusVector.getX(), newRadiusVector.getY());
     }
 }
