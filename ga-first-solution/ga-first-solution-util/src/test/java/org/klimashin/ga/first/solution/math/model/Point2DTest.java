@@ -1,11 +1,9 @@
-package org.klimashin.ga.first.solution.math.two.dimension.model;
+package org.klimashin.ga.first.solution.math.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
-import org.klimashin.ga.first.solution.math.model.Point2D;
-import org.klimashin.ga.first.solution.math.model.Vector2D;
 
 class Point2DTest {
 
