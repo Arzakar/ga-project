@@ -5,7 +5,7 @@ import org.klimashin.ga.first.solution.application.data.profile.CommandProfileDa
 import org.klimashin.ga.first.solution.application.data.profile.FixedVectorDeviationProfileData;
 import org.klimashin.ga.first.solution.application.entity.CommandProfileType;
 import org.klimashin.ga.first.solution.application.entity.InitialStateEntity;
-import org.klimashin.ga.first.solution.domain.model.Pair;
+import org.klimashin.ga.first.solution.domain.model.LongPair;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,7 +71,7 @@ public abstract class CommandProfileMapper {
 
         var intervals = requestDtoV1.getIntervals().stream()
                 .collect(Collectors.toMap(
-                        interval -> Pair.of(interval.getLeftValue(), interval.getRightValue()),
+                        interval -> LongPair.of(interval.getLeftValue(), interval.getRightValue()),
                         FixedDeviationCommandProfileRequestDtoV1.Interval::getDeviation));
 
         return new FixedVectorDeviationProfileData()

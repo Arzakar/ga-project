@@ -1,6 +1,6 @@
 package org.klimashin.ga.first.solution.domain.model;
 
-import org.klimashin.ga.first.solution.domain.math.Point;
+import org.klimashin.ga.first.solution.math.two.dimension.model.Point2D;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,5 +17,5 @@ import lombok.experimental.FieldDefaults;
 public class PointParticle {
 
     double mass;
-    Point position;
+    Point2D position;
 }

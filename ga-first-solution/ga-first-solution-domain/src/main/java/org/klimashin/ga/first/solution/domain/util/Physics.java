@@ -19,7 +19,7 @@ public class Physics {
     }
 
     public static double gravitationForceMagnitude(PointParticle firstParticle, PointParticle secondParticle) {
-        var distance = Points.distanceBetween(firstParticle, secondParticle);
+        var distance = PointParticles.distanceBetween(firstParticle, secondParticle);
         return G * ((firstParticle.getMass() * secondParticle.getMass()) / Math.pow(distance, 2));
     }
 

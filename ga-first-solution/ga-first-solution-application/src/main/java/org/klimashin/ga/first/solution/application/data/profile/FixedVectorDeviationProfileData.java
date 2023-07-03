@@ -1,6 +1,6 @@
 package org.klimashin.ga.first.solution.application.data.profile;
 
-import org.klimashin.ga.first.solution.domain.model.Pair;
+import org.klimashin.ga.first.solution.domain.model.LongPair;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
@@ -19,8 +19,8 @@ public class FixedVectorDeviationProfileData implements CommandProfileData {
 
     UUID startVectorObjectId;
     UUID endVectorObjectId;
-    Map<Pair, Double> intervals;
-    List<Pair> timeBounds;
+    Map<LongPair, Double> intervals;
+    List<LongPair> timeBounds;
 
     @Override
     @JsonIgnore

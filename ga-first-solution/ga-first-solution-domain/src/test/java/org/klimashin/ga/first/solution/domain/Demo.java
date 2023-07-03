@@ -5,7 +5,7 @@ import org.klimashin.ga.first.solution.domain.math.Point;
 import org.klimashin.ga.first.solution.domain.model.CelestialBody;
 import org.klimashin.ga.first.solution.domain.model.Engine;
 import org.klimashin.ga.first.solution.domain.model.Orbit;
-import org.klimashin.ga.first.solution.domain.model.Pair;
+import org.klimashin.ga.first.solution.domain.model.LongPair;
 import org.klimashin.ga.first.solution.domain.model.PointParticle;
 import org.klimashin.ga.first.solution.domain.model.Spacecraft;
 import org.klimashin.ga.first.solution.domain.model.condition.ProximityOfTwoObjects;
@@ -47,8 +47,8 @@ class Demo {
                 .engineCount(1)
                 .build();
         var intervals = Map.of(
-                Pair.of(0, Duration.ofDays(50).toSeconds()), Math.toRadians(-62),
-                Pair.of(Duration.ofDays(50).toSeconds(), Duration.ofDays(142).toSeconds()), Math.toRadians(52)
+                LongPair.of(0, Duration.ofDays(50).toSeconds()), Math.toRadians(-62),
+                LongPair.of(Duration.ofDays(50).toSeconds(), Duration.ofDays(142).toSeconds()), Math.toRadians(52)
         );
         var commandProfile = new FixedVectorDeviationCommandProfile(spacecraft, solar, intervals);
         var targetState = new ProximityOfTwoObjects(spacecraft, earth, Math.pow(10, 9));

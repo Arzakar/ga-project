@@ -2,6 +2,7 @@ package org.klimashin.ga.first.solution.domain.model;
 
 import org.klimashin.ga.first.solution.domain.math.Point;
 import org.klimashin.ga.first.solution.domain.math.Vector;
+import org.klimashin.ga.first.solution.math.two.dimension.model.Point2D;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Spacecraft extends PointParticle {
         return new SpacecraftBuilder();
     }
 
-    private Spacecraft(double mass, Point position, Vector speed, Vector acceleration,
+    private Spacecraft(double mass, Point2D position, Vector speed, Vector acceleration,
                        double fuelMass, Engine engine, int engineCount) {
         this.mass = mass;
         this.position = position;

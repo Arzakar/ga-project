@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.klimashin.ga.first.solution.domain.TestUtil;
 import org.klimashin.ga.first.solution.domain.math.Point;
 import org.klimashin.ga.first.solution.domain.math.Vector;
-import org.klimashin.ga.first.solution.domain.model.Pair;
+import org.klimashin.ga.first.solution.domain.model.LongPair;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,9 +20,9 @@ class FixedVectorDeviationCommandProfileTest {
 
     @Test
     void shouldCorrectConstruct() {
-        var firstPair = new Pair(0, 10);
-        var secondPair = new Pair(11, 20);
-        var thirstPair = new Pair(25, 30);
+        var firstPair = new LongPair(0, 10);
+        var secondPair = new LongPair(11, 20);
+        var thirstPair = new LongPair(25, 30);
         var intervals = Map.of(secondPair, 5d, thirstPair, 10d, firstPair, 20d);
 
         var profile = new FixedVectorDeviationCommandProfile(null, null, intervals);
@@ -49,9 +49,9 @@ class FixedVectorDeviationCommandProfileTest {
                         .generate())
                 .generate();
         var intervals = Map.of(
-                Pair.of(0, 10), Math.PI / 2,
-                Pair.of(11, 20), Math.PI,
-                Pair.of(25, 30), - Math.PI / 2);
+                LongPair.of(0, 10), Math.PI / 2,
+                LongPair.of(11, 20), Math.PI,
+                LongPair.of(25, 30), - Math.PI / 2);
 
         var profile = new FixedVectorDeviationCommandProfile(spacecraft, solar, intervals);
 
@@ -86,9 +86,9 @@ class FixedVectorDeviationCommandProfileTest {
                         .generate())
                 .generate();
         var intervals = Map.of(
-                Pair.of(0, 10), Math.PI / 2,
-                Pair.of(11, 20), Math.PI,
-                Pair.of(25, 30), - Math.PI / 2);
+                LongPair.of(0, 10), Math.PI / 2,
+                LongPair.of(11, 20), Math.PI,
+                LongPair.of(25, 30), - Math.PI / 2);
 
         var profile = new FixedVectorDeviationCommandProfile(spacecraft, solar, intervals);
 

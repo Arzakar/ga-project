@@ -1,6 +1,6 @@
 package org.klimashin.ga.first.solution.domain.model.profile;
 
-import org.klimashin.ga.first.solution.domain.model.Pair;
+import org.klimashin.ga.first.solution.domain.model.LongPair;
 import org.klimashin.ga.first.solution.domain.math.Vector;
 import org.klimashin.ga.first.solution.domain.model.PointParticle;
 import org.klimashin.ga.first.solution.domain.util.Vectors;
@@ -19,17 +19,17 @@ public class FixedVectorDeviationCommandProfile implements CommandProfile {
 
     PointParticle startVectorObject;
     PointParticle endVectorObject;
-    Map<Pair, Double> intervals;
-    List<Pair> timeBounds;
+    Map<LongPair, Double> intervals;
+    List<LongPair> timeBounds;
 
     public FixedVectorDeviationCommandProfile(PointParticle startVectorObject,
                                               PointParticle endVectorObject,
-                                              Map<Pair, Double> intervals) {
+                                              Map<LongPair, Double> intervals) {
         this.startVectorObject = startVectorObject;
         this.endVectorObject = endVectorObject;
         this.intervals = intervals;
         this.timeBounds = this.intervals.keySet().stream()
-                .sorted(Pair::compareToByLeftValue)
+                .sorted(LongPair::compareToByLeftValue)
                 .toList();
 
         validateTimeBounds(timeBounds);
@@ -52,7 +52,7 @@ public class FixedVectorDeviationCommandProfile implements CommandProfile {
                 .rotateByZ(angle);
     }
 
-    public void validateTimeBounds(List<Pair> timeBounds) {
+    public void validateTimeBounds(List<LongPair> timeBounds) {
         for (int i = 0; i < timeBounds.size() - 1; i++) {
             var leftBound = timeBounds.get(i);
             var rightBound = timeBounds.get(i + 1);

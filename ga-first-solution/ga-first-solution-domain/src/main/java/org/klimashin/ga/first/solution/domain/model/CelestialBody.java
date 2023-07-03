@@ -8,6 +8,7 @@ import org.klimashin.ga.first.solution.domain.math.Vector;
 import org.klimashin.ga.first.solution.domain.method.FixedPointIterationMethod;
 import org.klimashin.ga.first.solution.domain.util.Orbits;
 import org.klimashin.ga.first.solution.domain.util.Physics;
+import org.klimashin.ga.first.solution.math.two.dimension.model.Point2D;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class CelestialBody extends PointParticle {
         return new CelestialBodyBuilder();
     }
 
-    private CelestialBody(double mass, Point position, Orbit orbit, String name) {
+    private CelestialBody(double mass, Point2D position, Orbit orbit, String name) {
         this.mass = mass;
         this.position = position;
         this.orbit = orbit;

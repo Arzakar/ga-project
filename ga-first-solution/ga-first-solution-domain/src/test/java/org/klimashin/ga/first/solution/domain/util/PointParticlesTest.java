@@ -8,14 +8,14 @@ import org.klimashin.ga.first.solution.domain.model.PointParticle;
 
 import org.junit.jupiter.api.Test;
 
-class PointsTest {
+class PointParticlesTest {
 
     @Test
     void distanceBetween_shouldReturnDistanceBetweenPoints() {
         var firstPoint = new Point(2, 3, 4);
         var secondPoint = new Point(5, 6, 7);
 
-        var result = Points.distanceBetween(firstPoint, secondPoint);
+        var result = PointParticles.distanceBetween(firstPoint, secondPoint);
 
         assertThat(result)
                 .isEqualTo(5.196152, withPrecision(0.000001));
@@ -38,7 +38,7 @@ class PointsTest {
         var firstParticle = new PointParticle(10, firstPoint);
         var secondParticle = new PointParticle(20, secondPoint);
 
-        var result = Points.distanceBetween(firstParticle, secondParticle);
+        var result = PointParticles.distanceBetween(firstParticle, secondParticle);
 
         assertThat(result)
                 .isEqualTo(5.196152, withPrecision(0.000001));

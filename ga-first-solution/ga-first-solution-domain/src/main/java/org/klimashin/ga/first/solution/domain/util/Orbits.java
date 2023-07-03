@@ -23,6 +23,17 @@ public class Orbits {
         return Math.atan(rate * Math.tan(eccentricAnomaly / 2)) * 2;
     }
 
+    public Point calculatePosition(Orbit orbit) {
+        var eccentricAnomaly = calculateEccentricAnomaly(orbit.getTrueAnomaly(), orbit.getEccentricity());
+
+        var x = orbit.getSemiMajorAxis() * (Math.cos(eccentricAnomaly) - orbit.getEccentricity());
+        var y = orbit.getSemiMajorAxis() * Math.sqrt(1 - Math.pow(orbit.getEccentricity(), 2)) * Math.sin(eccentricAnomaly);
+
+        return Vector.of(x, y, 0)
+                .rotateByZ(orbit.getPerihelionArgument())
+                .toPoint();
+    }
+
     public Point calculatePosition(Orbit orbit, double eccentricAnomaly) {
         var x = orbit.getSemiMajorAxis() * (Math.cos(eccentricAnomaly) - orbit.getEccentricity());
         var y = orbit.getSemiMajorAxis() * Math.sqrt(1 - Math.pow(orbit.getEccentricity(), 2)) * Math.sin(eccentricAnomaly);

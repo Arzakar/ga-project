@@ -5,7 +5,7 @@ import static org.klimashin.ga.first.solution.application.configuration.EasyRand
 
 import org.klimashin.ga.first.solution.application.data.profile.CommandProfileTypeData;
 import org.klimashin.ga.first.solution.application.data.profile.FixedVectorDeviationProfileData;
-import org.klimashin.ga.first.solution.domain.model.Pair;
+import org.klimashin.ga.first.solution.domain.model.LongPair;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jeasy.random.EasyRandom;
@@ -45,8 +45,8 @@ class CommandProfileMapperTest {
         var data = new FixedVectorDeviationProfileData()
                 .setStartVectorObjectId(UUID.fromString("62799c01-6dd3-486d-b393-d909f90fb015"))
                 .setEndVectorObjectId(UUID.fromString("c53fe731-21bc-4dcc-ae96-e89d4b31563a"))
-                .setIntervals(Map.of(Pair.of(10, 20), 500d))
-                .setTimeBounds(List.of(Pair.of(10, 20)));
+                .setIntervals(Map.of(LongPair.of(10, 20), 500d))
+                .setTimeBounds(List.of(LongPair.of(10, 20)));
         var expectedResult = """
                 {
                     "startVectorObjectId": "62799c01-6dd3-486d-b393-d909f90fb015",

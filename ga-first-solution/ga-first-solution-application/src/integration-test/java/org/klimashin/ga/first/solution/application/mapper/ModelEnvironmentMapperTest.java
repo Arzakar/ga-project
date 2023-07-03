@@ -12,7 +12,7 @@ import org.klimashin.ga.first.solution.application.entity.EngineEntity;
 import org.klimashin.ga.first.solution.application.entity.InitialStateEntity;
 import org.klimashin.ga.first.solution.application.entity.OrbitEntity;
 import org.klimashin.ga.first.solution.application.entity.SpacecraftEntity;
-import org.klimashin.ga.first.solution.domain.model.Pair;
+import org.klimashin.ga.first.solution.domain.model.LongPair;
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
@@ -36,8 +36,8 @@ class ModelEnvironmentMapperTest {
                 .setCommandProfile(new FixedVectorDeviationProfileData()
                         .setStartVectorObjectId(UUID.fromString("62799c01-6dd3-486d-b393-d909f90fb015"))
                         .setEndVectorObjectId(UUID.fromString("c53fe731-21bc-4dcc-ae96-e89d4b31563a"))
-                        .setIntervals(Map.of(Pair.of(10, 20), 500d))
-                        .setTimeBounds(List.of(Pair.of(10, 20))))
+                        .setIntervals(Map.of(LongPair.of(10, 20), 500d))
+                        .setTimeBounds(List.of(LongPair.of(10, 20))))
                 .setTargetState(new ProximityOfTwoObjectsData()
                         .setFirstObjectId(UUID.fromString("62799c01-6dd3-486d-b393-d909f90fb015"))
                         .setSecondObjectId(UUID.fromString("c53fe731-21bc-4dcc-ae96-e89d4b31563a"))

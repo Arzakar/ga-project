@@ -12,5 +12,6 @@
 		<module>ga-first-solution-api</module>
 		<module>ga-first-solution-application</module>
 		<module>ga-first-solution-domain</module>
-	</modules>
+        <module>ga-first-solution-util</module>
+    </modules>
 </project>

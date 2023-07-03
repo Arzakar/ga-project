@@ -4,6 +4,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableFeignClients(basePackages = "com.klimashin.ga.first.solution.api.resource")
+@EnableFeignClients(basePackages = "org.klimashin.ga.first.solution.api.resource")
 public class FeignConfiguration {
 }
