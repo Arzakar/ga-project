@@ -2,8 +2,6 @@ package org.klimashin.ga.first.solution.application.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -31,10 +29,6 @@ public class InitialStateEntity {
     @Column(name = "id", nullable = false)
     UUID id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "result_state_id")
-    ResultStateEntity resultState;
-
     @OneToOne(optional = false)
     @JoinColumn(name = "central_body_id", nullable = false)
     CelestialBodyEntity centralBody;
@@ -49,31 +43,17 @@ public class InitialStateEntity {
     @Column(name = "spacecraft_position_y", nullable = false)
     Double spacecraftPositionY;
 
-    @Column(name = "spacecraft_position_z", nullable = false)
-    Double spacecraftPositionZ;
-
     @Column(name = "spacecraft_speed_x", nullable = false)
     Double spacecraftSpeedX;
 
     @Column(name = "spacecraft_speed_y", nullable = false)
     Double spacecraftSpeedY;
 
-    @Column(name = "spacecraft_speed_z", nullable = false)
-    Double spacecraftSpeedZ;
+    @Column(name = "bounds", nullable = false)
+    String bounds;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "command_profile_type")
-    CommandProfileType commandProfileType;
-
-    @Column(name = "command_profile_payload", columnDefinition = "TEXT")
-    String commandProfilePayload;
-
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "target_state_type", nullable = false)
-    TargetStateType targetStateType;
-
-    @Column(name = "target_state_payload", columnDefinition = "TEXT", nullable = false)
-    String targetStatePayload;
+    @Column(name = "deviations", nullable = false)
+    String deviations;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "initialState")
     List<InitialStateCelestialBodyPartEntity> celestialBodies;

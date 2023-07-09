@@ -1,7 +1,7 @@
 package org.klimashin.ga.first.solution.application.mapper;
 
-import org.klimashin.ga.first.solution.application.data.EngineData;
 import org.klimashin.ga.first.solution.application.entity.EngineEntity;
+import org.klimashin.ga.first.solution.domain.model.Engine;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -10,7 +10,7 @@ import org.mapstruct.ReportingPolicy;
         unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface EngineMapper {
 
-    EngineEntity dataToEntity(EngineData engineData);
+    EngineEntity domainToEntity(Engine domain);
 
-    EngineData entityToData(EngineEntity entity);
+    Engine entityToDomain(EngineEntity entity);
 }

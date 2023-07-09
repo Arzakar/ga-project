@@ -8,6 +8,5 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class SolverFacade {
-
+public class InitialStateFacade {
 }

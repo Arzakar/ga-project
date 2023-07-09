@@ -29,13 +29,4 @@ public class OrbitEntity {
 
     @Column(name = "eccentricity", nullable = false)
     Double eccentricity;
-
-    @Column(name = "inclination", nullable = false)
-    Double inclination;
-
-    @Column(name = "longitude_asc_node", nullable = false)
-    Double longitudeAscNode;
-
-    @Column(name = "perihelion_argument", nullable = false)
-    Double perihelionArgument;
 }

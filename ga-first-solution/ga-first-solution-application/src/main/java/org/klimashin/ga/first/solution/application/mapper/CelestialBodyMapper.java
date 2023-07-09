@@ -1,13 +1,10 @@
 package org.klimashin.ga.first.solution.application.mapper;
 
-import org.klimashin.ga.first.solution.application.data.CelestialBodyData;
 import org.klimashin.ga.first.solution.application.entity.CelestialBodyEntity;
+import org.klimashin.ga.first.solution.domain.model.CelestialBody;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.ERROR,
@@ -16,10 +13,7 @@ import java.util.List;
         })
 public interface CelestialBodyMapper {
 
-    CelestialBodyEntity dataToEntity(CelestialBodyData data);
+    CelestialBodyEntity domainToEntity(CelestialBody domain);
 
-    @Mapping(target = "position", ignore = true)
-    CelestialBodyData entityToData(CelestialBodyEntity entity);
-
-    List<CelestialBodyData> entityToData(List<CelestialBodyEntity> entities);
+    CelestialBody entityToDomain(CelestialBodyEntity entity);
 }

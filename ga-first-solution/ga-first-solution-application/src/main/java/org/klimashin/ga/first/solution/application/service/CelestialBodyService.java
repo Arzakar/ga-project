@@ -1,8 +1,8 @@
 package org.klimashin.ga.first.solution.application.service;
 
-import org.klimashin.ga.first.solution.application.data.CelestialBodyData;
 import org.klimashin.ga.first.solution.application.mapper.CelestialBodyMapper;
 import org.klimashin.ga.first.solution.application.repository.CelestialBodyRepository;
+import org.klimashin.ga.first.solution.domain.model.CelestialBody;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,9 @@ public class CelestialBodyService {
     CelestialBodyMapper mapper;
     CelestialBodyRepository repository;
 
-    public CelestialBodyData getCelestialBody(UUID celestialBodyId) {
+    public CelestialBody getCelestialBody(UUID celestialBodyId) {
         return repository.findById(celestialBodyId)
-                .map(mapper::entityToData)
+                .map(mapper::entityToDomain)
                 .orElseThrow();
     }
 }

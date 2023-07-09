@@ -1,8 +1,8 @@
 package org.klimashin.ga.first.solution.application.service;
 
-import org.klimashin.ga.first.solution.application.data.SpacecraftData;
 import org.klimashin.ga.first.solution.application.mapper.SpacecraftMapper;
 import org.klimashin.ga.first.solution.application.repository.SpacecraftRepository;
+import org.klimashin.ga.first.solution.domain.model.Spacecraft;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,9 @@ public class SpacecraftService {
     SpacecraftMapper mapper;
     SpacecraftRepository repository;
 
-    public SpacecraftData getSpacecraft(UUID spacecraftId) {
+    public Spacecraft getSpacecraft(UUID spacecraftId) {
         return repository.findById(spacecraftId)
-                .map(mapper::entityToData)
+                .map(mapper::entityToDomain)
                 .orElseThrow();
     }
 }

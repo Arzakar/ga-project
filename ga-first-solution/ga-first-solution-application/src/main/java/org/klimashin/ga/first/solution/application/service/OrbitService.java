@@ -1,8 +1,8 @@
 package org.klimashin.ga.first.solution.application.service;
 
-import org.klimashin.ga.first.solution.application.data.OrbitData;
 import org.klimashin.ga.first.solution.application.mapper.OrbitMapper;
 import org.klimashin.ga.first.solution.application.repository.OrbitRepository;
+import org.klimashin.ga.first.solution.domain.model.Orbit;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,9 @@ public class OrbitService {
     OrbitMapper mapper;
     OrbitRepository repository;
 
-    public OrbitData getOrbit(UUID orbitId) {
+    public Orbit getOrbit(UUID orbitId) {
         return repository.findById(orbitId)
-                .map(mapper::entityToData)
+                .map(mapper::entityToDomain)
                 .orElseThrow();
     }
 }

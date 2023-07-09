@@ -2,8 +2,8 @@ package org.klimashin.ga.first.solution.application.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.klimashin.ga.first.solution.application.data.OrbitData;
 import org.klimashin.ga.first.solution.application.entity.OrbitEntity;
+import org.klimashin.ga.first.solution.domain.model.Orbit;
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
@@ -15,18 +15,15 @@ class OrbitMapperTest {
     private final OrbitMapper mapper = Mappers.getMapper(OrbitMapper.class);
 
     @Test
-    void dataToEntity_shouldMap() {
-        var data = easyRandom.nextObject(OrbitData.class);
+    void domainToEntity_shouldMap() {
+        var data = easyRandom.nextObject(Orbit.class);
 
-        var result = mapper.dataToEntity(data);
+        var result = mapper.domainToEntity(data);
 
         assertThat(result)
-                .returns(data.getId(), OrbitEntity::getId)
+                .returns(null, OrbitEntity::getId)
                 .returns(data.getSemiMajorAxis(), OrbitEntity::getSemiMajorAxis)
-                .returns(data.getEccentricity(), OrbitEntity::getEccentricity)
-                .returns(data.getInclination(), OrbitEntity::getInclination)
-                .returns(data.getLongitudeAscNode(), OrbitEntity::getLongitudeAscNode)
-                .returns(data.getPerihelionArgument(), OrbitEntity::getPerihelionArgument);
+                .returns(data.getEccentricity(), OrbitEntity::getEccentricity);
     }
 
 }

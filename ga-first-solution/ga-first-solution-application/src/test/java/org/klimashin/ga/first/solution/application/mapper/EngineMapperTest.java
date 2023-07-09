@@ -2,8 +2,8 @@ package org.klimashin.ga.first.solution.application.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.klimashin.ga.first.solution.application.data.EngineData;
 import org.klimashin.ga.first.solution.application.entity.EngineEntity;
+import org.klimashin.ga.first.solution.domain.model.Engine;
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
@@ -16,14 +16,14 @@ class EngineMapperTest {
     private final EngineMapper mapper = Mappers.getMapper(EngineMapper.class);
 
     @Test
-    void dataToEntity_shouldMap() {
-        var data = easyRandom.nextObject(EngineData.class);
+    void domainToEntity_shouldMap() {
+        var data = easyRandom.nextObject(Engine.class);
 
-        var result = mapper.dataToEntity(data);
+        var result = mapper.domainToEntity(data);
 
         assertThat(result)
-                .returns(data.getId(), EngineEntity::getId)
-                .returns(data.getName(), EngineEntity::getName)
+                .returns(null, EngineEntity::getId)
+                .returns(null, EngineEntity::getName)
                 .returns(data.getThrust(), EngineEntity::getThrust)
                 .returns(data.getFuelConsumption(), EngineEntity::getFuelConsumption);
     }
