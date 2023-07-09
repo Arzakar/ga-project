@@ -17,18 +17,7 @@ public record Modeler(ModelEnvironment environment) {
         var deltaTime = 100L;
 
         while (seconds < maxDuration) {
-            var gravitationForce = Physics.gravitationForce(environment.getSpacecraft(), environment.getCentralBody());
-            var thrustForce = environment.getSpacecraft().getFuelMass() > 0
-                    ? environment.getCommandProfile().getThrustForceDirection(seconds).multiply(environment.getSpacecraft().getEngineSystemThrust())
-                    : Vector2D.zero();
-
-            var sumForce = Vector2D.zero()
-                    .add(gravitationForce)
-                    .add(thrustForce);
-
-            environment.getSpacecraft().move(sumForce, deltaTime);
-            environment.getSpacecraft().reduceFuel(deltaTime);
-            environment.getCelestialBodies().forEach(celestialBody -> celestialBody.move(deltaTime));
+            executeStep(seconds, deltaTime);
 
             if (environment.getTargetState().isAchieved()) {
                 return environment;
@@ -42,7 +31,7 @@ public record Modeler(ModelEnvironment environment) {
                 """, maxDuration));
     }
 
-    public List<ModelEnvironment> detailedExecute(int nodesCount) throws RuntimeException {
+    public List<ModelEnvironment> detailedExecute(final int nodesCount) throws RuntimeException {
         var resultSet = new ArrayList<ModelEnvironment>();
 
         var seconds = 0L;
@@ -52,18 +41,7 @@ public record Modeler(ModelEnvironment environment) {
         var compressionRate = 1;
 
         while (seconds < maxDuration) {
-            var gravitationForce = Physics.gravitationForce(environment.getSpacecraft(), environment.getCentralBody());
-            var thrustForce = environment.getSpacecraft().getFuelMass() > 0
-                    ? environment.getCommandProfile().getThrustForceDirection(seconds).multiply(environment.getSpacecraft().getEngineSystemThrust())
-                    : Vector2D.zero();
-
-            var sumForce = Vector2D.zero()
-                    .add(gravitationForce)
-                    .add(thrustForce);
-
-            environment.getSpacecraft().move(sumForce, deltaTime);
-            environment.getSpacecraft().reduceFuel(deltaTime);
-            environment.getCelestialBodies().forEach(celestialBody -> celestialBody.move(deltaTime));
+            executeStep(seconds, deltaTime);
 
             if (iteration % compressionRate == 0) {
                 resultSet.add(environment.copy());
@@ -96,5 +74,24 @@ public record Modeler(ModelEnvironment environment) {
 
         resultSet.add(environment.copy());
         return resultSet;
+    }
+
+    private void executeStep(final long seconds, final long deltaTime) {
+        var isEnoughFuel = environment.getSpacecraft().getFuelMass() > 0 && environment.getSpacecraft().isEnoughFuel(deltaTime);
+
+        var gravitationForce = Physics.gravitationForce(environment.getSpacecraft(), environment.getCentralBody());
+        var thrustForce = isEnoughFuel
+                ? environment.getCommandProfile().getThrustForceDirection(seconds).multiply(environment.getSpacecraft().getEngineSystemThrust())
+                : Vector2D.zero();
+        var sumForce = Vector2D.zero()
+                .add(gravitationForce)
+                .add(thrustForce);
+
+        environment.getSpacecraft().move(sumForce, deltaTime);
+        environment.getCelestialBodies().forEach(celestialBody -> celestialBody.move(deltaTime));
+
+        if (isEnoughFuel) {
+            environment.getSpacecraft().reduceFuel(deltaTime);
+        }
     }
 }

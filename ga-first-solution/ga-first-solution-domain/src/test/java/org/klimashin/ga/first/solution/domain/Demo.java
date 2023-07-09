@@ -62,16 +62,6 @@ class Demo {
     }
 
     @Test
-    void demo() {
-        var environment = prepareEnvironment();
-        var modeler = new Modeler(environment);
-
-        var result = modeler.execute();
-
-        System.out.println(result);
-    }
-
-    @Test
     void demoDetailed() {
         var environment = prepareEnvironment();
         var modeler = new Modeler(environment);
@@ -86,9 +76,10 @@ class Demo {
             var earthY = earth.getPosition().getY() / rate;
             var scX = spacecraft.getPosition().getX() / rate;
             var scY = spacecraft.getPosition().getY() / rate;
+            var scV = spacecraft.getSpeed().getScalar();
             var scMass = spacecraft.getMass();
             var trueAnomaly = Math.toDegrees(earth.getOrbit().getTrueAnomaly());
-            System.out.println(earthX + "," + earthY + "," + scX + "," + scY + "," + scMass + "," + trueAnomaly);
+            System.out.println(trueAnomaly + "," + earthX + "," + earthY + "," + scX + "," + scY + "," + scV + "," + scMass);
         });
     }
 }

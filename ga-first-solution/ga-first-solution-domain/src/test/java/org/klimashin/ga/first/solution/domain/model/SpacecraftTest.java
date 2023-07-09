@@ -46,12 +46,12 @@ class SpacecraftTest {
                 .returns(0, Spacecraft::getEngineCount);
 
         assertThat(result.getPosition())
-                .returns(2020d, Point2D::getX)
-                .returns(1210d, Point2D::getY);
+                .returns(20.20d, Point2D::getX)
+                .returns(10.12d, Point2D::getY);
 
         assertThat(result.getSpeed())
-                .returns(1005d, Vector2D::getX)
-                .returns(600d, Vector2D::getY);
+                .returns(5.10d, Vector2D::getX)
+                .returns(0.06d, Vector2D::getY);
 
         assertThat(forceVector)
                 .returns(5d, Vector2D::getX)

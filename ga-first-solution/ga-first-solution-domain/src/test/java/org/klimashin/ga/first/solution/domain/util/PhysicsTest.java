@@ -34,7 +34,7 @@ class PhysicsTest {
 
         var result = Physics.gravitationForceMagnitude(firstParticle, secondParticle);
 
-        assertThat(result).isEqualTo(0.000_000_049_439_259, withPrecision(0.000_000_000_000_001));
+        assertThat(result).isEqualTo(0.000_000_074_158_888, withPrecision(0.000_000_000_000_001));
     }
 
     @Test
@@ -48,7 +48,7 @@ class PhysicsTest {
 
         var precision = 15;
         assertThat(result)
-                .returns(0.000_000_028_543_770, value -> testRound(value.getX(), precision))
-                .returns(0.000_000_028_543_770, value -> testRound(value.getY(), precision));
+                .returns(0.000_000_052_438_253, value -> testRound(value.getX(), precision))
+                .returns(0.000_000_052_438_253, value -> testRound(value.getY(), precision));
     }
 }

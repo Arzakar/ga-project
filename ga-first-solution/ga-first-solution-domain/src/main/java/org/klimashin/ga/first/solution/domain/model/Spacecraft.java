@@ -47,6 +47,11 @@ public class Spacecraft extends PointParticle {
         return engine.getThrust() * engineCount;
     }
 
+    public boolean isEnoughFuel(double deltaTime) {
+        var requiredFuelMass = (engine.getFuelConsumption() * engineCount) * deltaTime;
+        return fuelMass >= requiredFuelMass;
+    }
+
     public Spacecraft reduceFuel(double deltaTime) {
         var deltaMass = (engine.getFuelConsumption() * engineCount) * deltaTime;
         fuelMass -= deltaMass;
