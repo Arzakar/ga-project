@@ -4,6 +4,7 @@ import org.klimashin.ga.first.solution.application.entity.SpacecraftEntity;
 import org.klimashin.ga.first.solution.domain.model.Spacecraft;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",
@@ -13,7 +14,9 @@ import org.mapstruct.ReportingPolicy;
         })
 public interface SpacecraftMapper {
 
-    SpacecraftEntity domainToEntity(Spacecraft domain);
-
+    @Mapping(target = "mass", expression = "java(entity.getDryMass() + entity.getStartFuelMass())")
+    @Mapping(target = "position", ignore = true)
+    @Mapping(target = "speed", ignore = true)
+    @Mapping(target = "fuelMass", expression = "java(entity.getStartFuelMass())")
     Spacecraft entityToDomain(SpacecraftEntity entity);
 }

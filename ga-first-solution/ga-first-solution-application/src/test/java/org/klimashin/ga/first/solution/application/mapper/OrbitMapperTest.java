@@ -16,14 +16,14 @@ class OrbitMapperTest {
 
     @Test
     void domainToEntity_shouldMap() {
-        var data = easyRandom.nextObject(Orbit.class);
+        var domain = easyRandom.nextObject(Orbit.class);
 
-        var result = mapper.domainToEntity(data);
+        var result = mapper.domainToEntity(domain);
 
         assertThat(result)
                 .returns(null, OrbitEntity::getId)
-                .returns(data.getSemiMajorAxis(), OrbitEntity::getSemiMajorAxis)
-                .returns(data.getEccentricity(), OrbitEntity::getEccentricity);
+                .returns(domain.getSemiMajorAxis(), OrbitEntity::getSemiMajorAxis)
+                .returns(domain.getEccentricity(), OrbitEntity::getEccentricity);
     }
 
 }

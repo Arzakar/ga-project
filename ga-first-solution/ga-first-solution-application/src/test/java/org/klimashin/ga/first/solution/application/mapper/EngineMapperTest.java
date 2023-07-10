@@ -17,15 +17,15 @@ class EngineMapperTest {
 
     @Test
     void domainToEntity_shouldMap() {
-        var data = easyRandom.nextObject(Engine.class);
+        var domain = easyRandom.nextObject(Engine.class);
 
-        var result = mapper.domainToEntity(data);
+        var result = mapper.domainToEntity(domain);
 
         assertThat(result)
                 .returns(null, EngineEntity::getId)
                 .returns(null, EngineEntity::getName)
-                .returns(data.getThrust(), EngineEntity::getThrust)
-                .returns(data.getFuelConsumption(), EngineEntity::getFuelConsumption);
+                .returns(domain.getThrust(), EngineEntity::getThrust)
+                .returns(domain.getFuelConsumption(), EngineEntity::getFuelConsumption);
     }
 
 }

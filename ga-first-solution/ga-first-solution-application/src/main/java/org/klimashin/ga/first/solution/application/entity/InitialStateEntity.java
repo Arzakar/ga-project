@@ -1,6 +1,10 @@
 package org.klimashin.ga.first.solution.application.entity;
 
+import org.klimashin.ga.first.solution.application.entity.converter.DoubleListConverter;
+import org.klimashin.ga.first.solution.application.entity.converter.IntegerListConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +17,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,11 +55,17 @@ public class InitialStateEntity {
     @Column(name = "spacecraft_speed_y", nullable = false)
     Double spacecraftSpeedY;
 
+    @Convert(converter = IntegerListConverter.class)
     @Column(name = "bounds", nullable = false)
-    String bounds;
+    List<Integer> bounds;
 
+    @Convert(converter = DoubleListConverter.class)
     @Column(name = "deviations", nullable = false)
-    String deviations;
+    List<Double> deviations;
+
+    @CreationTimestamp
+    @Column(name = "create_timestamp", nullable = false, updatable = false)
+    ZonedDateTime createTimestamp;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "initialState")
     List<InitialStateCelestialBodyPartEntity> celestialBodies;

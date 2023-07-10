@@ -5,7 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
-    <include file="2023-05-10--create-domain-schema.xml" relativeToChangelogFile="true"/>
-    <include file="2023-06-04--add-constant-data-and-remove-constraints.xml" relativeToChangelogFile="true"/>
+    <!-- DDL -->
+    <include file="ddl/2023-07-10--create-domain-schema.xml" relativeToChangelogFile="true"/>
+
+    <!-- DML -->
+    <include file="dml/2023-07-10--load-default-entities.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

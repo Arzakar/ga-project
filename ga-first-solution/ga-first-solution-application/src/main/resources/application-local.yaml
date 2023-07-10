@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5401/FIRST_SOLUTION
+    username: FIRST_SOLUTION
+    password: FIRST_SOLUTION
+
+logging:
+  level:
+    web: TRACE

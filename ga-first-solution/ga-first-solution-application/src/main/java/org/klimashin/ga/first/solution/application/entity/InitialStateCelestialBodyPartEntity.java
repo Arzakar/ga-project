@@ -13,7 +13,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Getter
@@ -38,4 +40,8 @@ public class InitialStateCelestialBodyPartEntity {
 
     @Column(name = "true_anomaly", nullable = false)
     Double trueAnomaly;
+
+    @CreationTimestamp
+    @Column(name = "create_timestamp", nullable = false, updatable = false)
+    ZonedDateTime createTimestamp;
 }

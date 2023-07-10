@@ -4,6 +4,7 @@ import org.klimashin.ga.first.solution.application.entity.CelestialBodyEntity;
 import org.klimashin.ga.first.solution.domain.model.CelestialBody;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",
@@ -13,6 +14,7 @@ import org.mapstruct.ReportingPolicy;
         })
 public interface CelestialBodyMapper {
 
+    @Mapping(target = "id", ignore = true)
     CelestialBodyEntity domainToEntity(CelestialBody domain);
 
     CelestialBody entityToDomain(CelestialBodyEntity entity);

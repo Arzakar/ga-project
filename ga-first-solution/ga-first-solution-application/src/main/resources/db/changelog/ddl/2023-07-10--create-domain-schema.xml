@@ -3,7 +3,13 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
-    <changeSet id="2023-05-10--01-create-engine-table.xml" author="Stepan_Klimashin">
+    <changeSet id="2023-07-10--01-create-engine-table.xml" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="engine"/>
+            </not>
+        </preConditions>
+
         <createTable tableName="engine">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"
@@ -22,16 +28,22 @@
 
         <sql>
             ALTER TABLE engine
-            ADD CONSTRAINT positive_thrust_constraint
-            CHECK (thrust > 0);
+                ADD CONSTRAINT positive_thrust_constraint
+                    CHECK (thrust > 0);
 
             ALTER TABLE engine
-            ADD CONSTRAINT positive_fuel_consumption_constraint
-            CHECK (fuel_consumption > 0);
+                ADD CONSTRAINT positive_fuel_consumption_constraint
+                    CHECK (fuel_consumption > 0);
         </sql>
     </changeSet>
 
-    <changeSet id="2023-05-10--02-create-spacecraft-table" author="Stepan_Klimashin">
+    <changeSet id="2023-07-10--02-create-spacecraft-table" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="spacecraft"/>
+            </not>
+        </preConditions>
+
         <createTable tableName="spacecraft">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"
@@ -55,16 +67,22 @@
         </createTable>
         <sql>
             ALTER TABLE spacecraft
-            ADD CONSTRAINT positive_dry_mass_constraint
-            CHECK (dry_mass > 0);
+                ADD CONSTRAINT positive_dry_mass_constraint
+                    CHECK (dry_mass > 0);
 
             ALTER TABLE spacecraft
-            ADD CONSTRAINT positive_start_fuel_mass_constraint
-            CHECK (start_fuel_mass >= 0);
+                ADD CONSTRAINT positive_start_fuel_mass_constraint
+                    CHECK (start_fuel_mass >= 0);
         </sql>
     </changeSet>
 
-    <changeSet id="2023-05-10--04-create-orbit-table" author="Stepan_Klimashin">
+    <changeSet id="2023-07-10--03-create-orbit-table" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="orbit"/>
+            </not>
+        </preConditions>
+
         <createTable tableName="orbit">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"
@@ -76,24 +94,21 @@
             <column name="eccentricity" type="double">
                 <constraints nullable="false"/>
             </column>
-            <column name="inclination" type="double">
-                <constraints nullable="false"/>
-            </column>
-            <column name="longitude_asc_node" type="double">
-                <constraints nullable="false"/>
-            </column>
-            <column name="perihelion_argument" type="double">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
         <sql>
             ALTER TABLE orbit
-            ADD CONSTRAINT positive_semi_major_axis_constraint
-            CHECK (semi_major_axis > 0);
+                ADD CONSTRAINT positive_semi_major_axis_constraint
+                    CHECK (semi_major_axis > 0);
         </sql>
     </changeSet>
 
-    <changeSet id="2023-05-10--03-create-celestial-body-table" author="Stepan_Klimashin">
+    <changeSet id="2023-07-10--04-create-celestial-body-table" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="celestial_body"/>
+            </not>
+        </preConditions>
+
         <createTable tableName="celestial_body">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"
@@ -114,18 +129,23 @@
         </createTable>
         <sql>
             ALTER TABLE celestial_body
-            ADD CONSTRAINT positive_mass_constraint
-            CHECK (mass > 0);
+                ADD CONSTRAINT positive_mass_constraint
+                    CHECK (mass > 0);
         </sql>
     </changeSet>
 
-    <changeSet id="2023-05-25--05-create-initial-state-table" author="Stepan_Klimashin">
+    <changeSet id="2023-07-10--05-create-initial-state-table" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="initial_state"/>
+            </not>
+        </preConditions>
+
         <createTable tableName="initial_state">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"
                              primaryKeyName="initial_state_pk"/>
             </column>
-            <column name="result_state_id" type="uuid"/>
             <column name="central_body_id" type="uuid">
                 <constraints nullable="false"
                              foreignKeyName="initial_state_to_celestial_body_fk"
@@ -144,34 +164,31 @@
             <column name="spacecraft_position_y" type="double" defaultOnNull="true" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="spacecraft_position_z" type="double" defaultOnNull="true" defaultValue="0">
-                <constraints nullable="false"/>
-            </column>
             <column name="spacecraft_speed_x" type="double" defaultOnNull="true" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
             <column name="spacecraft_speed_y" type="double" defaultOnNull="true" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="spacecraft_speed_z" type="double" defaultOnNull="true" defaultValue="0">
+            <column name="bounds" type="text">
                 <constraints nullable="false"/>
             </column>
-            <column name="command_profile_type" type="varchar">
+            <column name="deviations" type="text">
                 <constraints nullable="false"/>
             </column>
-            <column name="command_profile_payload" type="text">
-                <constraints nullable="false"/>
-            </column>
-            <column name="target_state_type" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name="target_state_payload" type="text">
+            <column name="create_timestamp" type="timestamp with time zone" defaultValueComputed="now()">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
 
-    <changeSet id="2023-05-25--06-create-initial-state-celestial-body-part-table" author="Stepan_Klimashin">
+    <changeSet id="2023-07-10--06-create-initial-state-celestial-body-part-table" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="initial_state_celestial_body_part"/>
+            </not>
+        </preConditions>
+
         <createTable tableName="initial_state_celestial_body_part">
             <column name="id" type="uuid">
                 <constraints primaryKey="true"
@@ -192,86 +209,10 @@
             <column name="true_anomaly" type="double" defaultOnNull="true" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="2023-05-25--07-create-result-state-table" author="Stepan_Klimashin">
-        <createTable tableName="result_state">
-            <column name="id" type="uuid">
-                <constraints primaryKey="true"
-                             primaryKeyName="result_state_pk"/>
-            </column>
-            <column name="initial_state_id" type="uuid">
-                <constraints nullable="false"/>
-            </column>
-            <column name="spacecraft_position_x" type="double">
-                <constraints nullable="false"/>
-            </column>
-            <column name="spacecraft_position_y" type="double">
-                <constraints nullable="false"/>
-            </column>
-            <column name="spacecraft_position_z" type="double">
-                <constraints nullable="false"/>
-            </column>
-            <column name="spacecraft_speed_x" type="double">
-                <constraints nullable="false"/>
-            </column>
-            <column name="spacecraft_speed_y" type="double">
-                <constraints nullable="false"/>
-            </column>
-            <column name="spacecraft_speed_z" type="double">
-                <constraints nullable="false"/>
-            </column>
-            <column name="finish_fuel_mass" type="double">
-                <constraints nullable="false"/>
-            </column>
-            <column name="status" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="text"/>
-        </createTable>
-        <sql>
-            ALTER TABLE result_state
-            ADD CONSTRAINT positive_finish_fuel_mass_constraint
-            CHECK (finish_fuel_mass > 0);
-        </sql>
-    </changeSet>
-
-    <changeSet id="2023-05-25--08-create-result-state-celestial-body-part-table" author="Stepan_Klimashin">
-        <createTable tableName="result_state_celestial_body_part">
-            <column name="id" type="uuid">
-                <constraints primaryKey="true"
-                             primaryKeyName="result_state_celestial_body_part_pk"/>
-            </column>
-            <column name="result_state_id" type="uuid">
-                <constraints nullable="false"
-                             foreignKeyName="result_state_celestial_body_part_to_result_state_fk"
-                             referencedTableName="result_state"
-                             referencedColumnNames="id"/>
-            </column>
-            <column name="celestial_body_id" type="uuid">
-                <constraints nullable="false"
-                             foreignKeyName="initial_state_celestial_body_part_to_celestial_body_fk"
-                             referencedTableName="celestial_body"
-                             referencedColumnNames="id"/>
-            </column>
-            <column name="true_anomaly" type="double">
+            <column name="create_timestamp" type="timestamp with time zone" defaultValueComputed="now()">
                 <constraints nullable="false"/>
             </column>
         </createTable>
-    </changeSet>
-
-    <changeSet id="2023-05-25--09-link-initial-and-result-tables" author="Stepan_Klimashin">
-        <addForeignKeyConstraint baseTableName="initial_state"
-                                 baseColumnNames="result_state_id"
-                                 constraintName="initial_state_to_result_state_fk"
-                                 referencedTableName="result_state"
-                                 referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="result_state"
-                                 baseColumnNames="initial_state_id"
-                                 constraintName="result_state_to_initial_state_fk"
-                                 referencedTableName="initial_state"
-                                 referencedColumnNames="id"/>
     </changeSet>
 
 </databaseChangeLog>
