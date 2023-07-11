@@ -1,5 +1,6 @@
 package org.klimashin.ga.first.solution.application.mapper;
 
+import org.klimashin.ga.first.solution.application.data.OrbitData;
 import org.klimashin.ga.first.solution.application.entity.OrbitEntity;
 import org.klimashin.ga.first.solution.domain.model.Orbit;
 
@@ -13,6 +14,13 @@ public interface OrbitMapper {
 
     @Mapping(target = "id", ignore = true)
     OrbitEntity domainToEntity(Orbit domain);
+
+    @Mapping(target = "inclination", ignore = true)
+    @Mapping(target = "longitudeAscNode", ignore = true)
+    @Mapping(target = "perihelionArgument", ignore = true)
+    @Mapping(target = "trueAnomaly", ignore = true)
+    @Mapping(target = "attractingBodyMass", ignore = true)
+    OrbitData entityToData(OrbitEntity entity);
 
     @Mapping(target = "inclination", ignore = true)
     @Mapping(target = "longitudeAscNode", ignore = true)

@@ -1,5 +1,6 @@
 package org.klimashin.ga.first.solution.application.mapper;
 
+import org.klimashin.ga.first.solution.application.data.CelestialBodyData;
 import org.klimashin.ga.first.solution.application.entity.CelestialBodyEntity;
 import org.klimashin.ga.first.solution.domain.model.CelestialBody;
 
@@ -16,6 +17,9 @@ public interface CelestialBodyMapper {
 
     @Mapping(target = "id", ignore = true)
     CelestialBodyEntity domainToEntity(CelestialBody domain);
+
+    @Mapping(target = "position", ignore = true)
+    CelestialBodyData entityToData(CelestialBodyEntity entity);
 
     CelestialBody entityToDomain(CelestialBodyEntity entity);
 }
