@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface SpacecraftRepository extends JpaRepository<SpacecraftEntity, UUID> {
+public interface SpacecraftRepository extends JpaRepository<SpacecraftEntity, String> {
 }

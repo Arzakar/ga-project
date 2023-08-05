@@ -3,25 +3,19 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
-    <changeSet id="2023-07-10--01-add-orbits" author="Stepan_Klimashin">
-        <insert tableName="orbit">
-            <column name="id" value="f5d32beb-ba6f-43a9-a4c9-79e40fd38312"/>
+    <changeSet id="2023-08-05--02-add-celestial-bodies" author="Stepan_Klimashin">
+        <insert tableName="celestial_body">
+            <column name="name" value="Solar"/>
+            <column name="mass" value="1988500000000000000000000000000"/>
+            <column name="semi_major_axis" value="0"/>
+            <column name="eccentricity" value="0"/>
+        </insert>
+        <insert tableName="celestial_body">
+            <column name="name" value="Earth"/>
+            <column name="mass" value="5972200000000000000000000"/>
             <column name="semi_major_axis" value="149600000000"/>
             <column name="eccentricity" value="0.0167086"/>
         </insert>
     </changeSet>
 
-    <changeSet id="2023-07-10--02-add-celestial-bodies" author="Stepan_Klimashin">
-        <insert tableName="celestial_body">
-            <column name="id" value="e83be6b3-298f-447b-9781-6e0cb8041fcb"/>
-            <column name="name" value="Solar"/>
-            <column name="mass" value="1988500000000000000000000000000"/>
-        </insert>
-        <insert tableName="celestial_body">
-            <column name="id" value="3aa2e481-e61f-44c4-8b2d-e6a8825d3468"/>
-            <column name="orbit_id" value="f5d32beb-ba6f-43a9-a4c9-79e40fd38312"/>
-            <column name="name" value="Earth"/>
-            <column name="mass" value="5972200000000000000000000"/>
-        </insert>
-    </changeSet>
 </databaseChangeLog>

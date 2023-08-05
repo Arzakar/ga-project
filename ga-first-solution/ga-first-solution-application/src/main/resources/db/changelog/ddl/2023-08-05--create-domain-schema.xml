@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="2023-08-05--01-create-spacecraft-table" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="spacecraft"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="spacecraft">
+            <column name="id" type="varchar">
+                <constraints primaryKey="true"
+                             primaryKeyName="spacecraft_pk"/>
+            </column>
+            <column name="dry_mass" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_fuel_mass" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="engine_thrust" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="engine_fuel_consumption" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="engine_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-08-05--02-create-spacecraft-table" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="spacecraft_initial_state"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="spacecraft_initial_state">
+            <column name="id" type="varchar">
+                <constraints primaryKey="true"
+                             primaryKeyName="spacecraft_initial_state_pk"/>
+            </column>
+            <column name="pos_x" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pos_y" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="spd_x" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="spd_y" type="double">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-08-05--03-create-celestial-body-table" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="celestial_body"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="celestial_body">
+            <column name="name" type="varchar">
+                <constraints primaryKey="true"
+                             primaryKeyName="celestial_body_pk"/>
+            </column>
+            <column name="mass" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="semi_major_axis" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="eccentricity" type="double">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-08-05--04-create-initial-state-table" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="initial_state"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="initial_state">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"
+                             primaryKeyName="initial_state_pk"/>
+            </column>
+            <column name="spacecraft_id" type="varchar">
+                <constraints nullable="false"
+                             foreignKeyName="initial_state_to_spacecraft_fk"
+                             referencedTableName="spacecraft"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="spacecraft_initial_state_id" type="varchar">
+                <constraints nullable="false"
+                             foreignKeyName="initial_state_to_spacecraft_initial_state_fk"
+                             referencedTableName="spacecraft_initial_state"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="durations" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deviations" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_timestamp" type="timestamp with time zone" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-08-05--05-create-result-table" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <not>
+                <tableExists tableName="result"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="result">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"
+                             primaryKeyName="result_pk"/>
+            </column>
+            <column name="initial_state_id" type="uuid">
+                <constraints nullable="false"
+                             foreignKeyName="result_to_initial_state_fk"
+                             referencedTableName="initial_state"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="spacecraft_pos" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="earth_pos" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fail_reason" type="text"/>
+            <column name="create_timestamp" type="timestamp with time zone" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

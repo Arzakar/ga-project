@@ -2,13 +2,12 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
     <!-- DDL -->
-    <include file="ddl/2023-07-10--create-domain-schema.xml" relativeToChangelogFile="true"/>
+    <include file="ddl/2023-08-05--create-domain-schema.xml" relativeToChangelogFile="true"/>
 
     <!-- DML -->
-    <include file="dml/2023-07-10--load-default-entities.xml" relativeToChangelogFile="true"/>
+    <include file="dml/2023-08-05--load-default-entities.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

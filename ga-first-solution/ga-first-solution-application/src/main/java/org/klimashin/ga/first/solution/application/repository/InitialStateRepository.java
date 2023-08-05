@@ -1,6 +1,6 @@
 package org.klimashin.ga.first.solution.application.repository;
 
-import org.klimashin.ga.first.solution.application.entity.EngineEntity;
+import org.klimashin.ga.first.solution.application.entity.InitialStateEntity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface EngineRepository extends JpaRepository<EngineEntity, UUID> {
+public interface InitialStateRepository extends JpaRepository<InitialStateEntity, UUID> {
 }
