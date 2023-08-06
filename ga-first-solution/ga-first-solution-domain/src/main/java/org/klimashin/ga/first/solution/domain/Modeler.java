@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 public record Modeler(ModelEnvironment environment) {
 
-    private static final long maxDuration = 15_552_000;
+    private static final long maxDuration = 31_536_000;
 
     public ModelEnvironment execute() throws RuntimeException {
         var seconds = 0L;

@@ -46,8 +46,8 @@ class Demo {
                 .engineCount(1)
                 .build();
         var intervals = Map.of(
-                LongPair.of(0L, Duration.ofDays(50).toSeconds()), Math.toRadians(-62),
-                LongPair.of(Duration.ofDays(50).toSeconds(), Duration.ofDays(142).toSeconds()), Math.toRadians(52)
+                LongPair.of(0L, Duration.ofDays(50).toSeconds()), Math.toRadians(-60),
+                LongPair.of(Duration.ofDays(50).toSeconds(), Duration.ofDays(150).toSeconds()), Math.toRadians(60)
         );
         var commandProfile = new FixedVectorDeviationCommandProfile(spacecraft, solar, intervals);
         var targetState = new ProximityOfTwoObjects(spacecraft, earth, Math.pow(10, 9));

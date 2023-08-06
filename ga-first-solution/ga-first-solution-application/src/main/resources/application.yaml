@@ -3,7 +3,7 @@ spring:
     name: ga-first-solution
 
   datasource:
-    url: jdbc:postgresql://localhost:5401/FIRST_SOLUTION
+    url: jdbc:postgresql://host.docker.internal:5401/FIRST_SOLUTION
     username: FIRST_SOLUTION
     password: FIRST_SOLUTION
     driver-class-name: org.postgresql.Driver

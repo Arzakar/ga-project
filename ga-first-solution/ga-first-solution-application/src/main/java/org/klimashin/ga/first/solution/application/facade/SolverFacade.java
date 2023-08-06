@@ -1,12 +1,12 @@
 package org.klimashin.ga.first.solution.application.facade;
 
-import org.klimashin.ga.first.solution.application.entity.CelestialBodyEntity;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW;
+
 import org.klimashin.ga.first.solution.application.entity.InitialStateEntity;
 import org.klimashin.ga.first.solution.application.entity.ResultEntity;
 import org.klimashin.ga.first.solution.application.service.CelestialBodyService;
 import org.klimashin.ga.first.solution.application.service.InitialStateService;
 import org.klimashin.ga.first.solution.application.service.ResultService;
-import org.klimashin.ga.first.solution.application.service.SpacecraftService;
 import org.klimashin.ga.first.solution.domain.ModelEnvironment;
 import org.klimashin.ga.first.solution.domain.Modeler;
 import org.klimashin.ga.first.solution.domain.model.CelestialBody;
@@ -28,20 +28,18 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -53,11 +51,14 @@ public class SolverFacade {
     InitialStateService initialStateService;
     ThreadPoolTaskExecutor taskExecutor;
     ResultService resultService;
+    PlatformTransactionManager platformTransactionManager;
 
     public void startResolveProcess() {
         if (taskExecutor.getActiveCount() > 0) {
             throw new RuntimeException("Too early");
         }
+
+        var transactionTemplate = new TransactionTemplate(platformTransactionManager, new DefaultTransactionDefinition(PROPAGATION_REQUIRES_NEW));
 
         var pageSize = 20;
         var solar = celestialBodyService.getCelestialBody("Solar");
@@ -66,8 +67,8 @@ public class SolverFacade {
         var completionService = new ExecutorCompletionService<ResultEntity>(newTaskExecutor);
 
         taskExecutor.execute(() -> {
-
-            var initialStates = initialStateService.getPageByStatus(InitialStateEntity.InitialStateStatus.CREATED, 0, pageSize);
+            var initialStates = Optional.ofNullable(transactionTemplate.execute(state -> getPagedInitialStates(pageSize)))
+                    .orElseThrow();
 
             while (!initialStates.isEmpty()) {
                 var tasks = initialStates.stream()
@@ -139,7 +140,7 @@ public class SolverFacade {
                 var results = new ArrayList<ResultEntity>();
                 var updatedInitialState = new ArrayList<InitialStateEntity>();
 
-                while (results.size() < pageSize) {
+                while (results.size() < initialStates.size()) {
                     try {
                         var result = completionService.take().get();
                         var initialStateStatus = result.getState().equals(ResultEntity.ResultState.SUCCESSFUL)
@@ -149,17 +150,24 @@ public class SolverFacade {
                         results.add(result);
                         updatedInitialState.add(result.getInitialState().setStatus(initialStateStatus));
 
-                    } catch (InterruptedException exception) {
+                    } catch (InterruptedException | ExecutionException exception) {
                         throw new RuntimeException(exception);
-
-                    } catch (ExecutionException e) {
-                        throw new RuntimeException(e);
                     }
                 }
 
-                resultService.saveAll(results);
-                initialStateService.saveAll(updatedInitialState);
+                transactionTemplate.executeWithoutResult(state -> {
+                            resultService.saveAll(results);
+                            initialStateService.saveAll(updatedInitialState);
+                        }
+                );
+
+                initialStates = Optional.ofNullable(transactionTemplate.execute(state -> getPagedInitialStates(pageSize)))
+                        .orElseThrow();
             }
         });
+    }
+
+    public List<InitialStateEntity> getPagedInitialStates(int pageSize) {
+        return initialStateService.getPageByStatus(InitialStateEntity.InitialStateStatus.CREATED, 0, pageSize).getContent();
     }
 }
