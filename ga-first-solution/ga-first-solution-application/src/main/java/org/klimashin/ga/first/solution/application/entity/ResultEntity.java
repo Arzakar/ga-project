@@ -42,11 +42,11 @@ public class ResultEntity {
     InitialStateEntity initialState;
 
     @Convert(converter = DoubleListConverter.class)
-    @Column(name = "spacecraft_pos", nullable = false)
+    @Column(name = "spacecraft_pos")
     List<Double> spacecraftPos;
 
     @Convert(converter = DoubleListConverter.class)
-    @Column(name = "earth_pos", nullable = false)
+    @Column(name = "earth_pos")
     List<Double> earthPos;
 
     @Enumerated(EnumType.STRING)
@@ -63,6 +63,26 @@ public class ResultEntity {
     public enum ResultState {
 
         SUCCESSFUL,
+        NOT_OPTIMAL,
         FAILED
+    }
+
+    public ResultEntity(InitialStateEntity initialState, String failReason) {
+        this.initialState = initialState;
+        this.state = ResultState.NOT_OPTIMAL;
+        this.failReason = failReason;
+    }
+
+    public ResultEntity(InitialStateEntity initialState, ResultState state, String failReason) {
+        this.initialState = initialState;
+        this.state = state;
+        this.failReason = failReason;
+    }
+
+    public ResultEntity(InitialStateEntity initialState, List<Double> spacecraftPos, List<Double> earthPos) {
+        this.initialState = initialState;
+        this.spacecraftPos = spacecraftPos;
+        this.earthPos = earthPos;
+        this.state = ResultState.SUCCESSFUL;
     }
 }

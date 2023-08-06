@@ -141,12 +141,8 @@
                              referencedTableName="initial_state"
                              referencedColumnNames="id"/>
             </column>
-            <column name="spacecraft_pos" type="text">
-                <constraints nullable="false"/>
-            </column>
-            <column name="earth_pos" type="text">
-                <constraints nullable="false"/>
-            </column>
+            <column name="spacecraft_pos" type="text"/>
+            <column name="earth_pos" type="text"/>
             <column name="state" type="varchar">
                 <constraints nullable="false"/>
             </column>
