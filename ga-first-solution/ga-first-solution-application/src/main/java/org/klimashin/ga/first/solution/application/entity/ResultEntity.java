@@ -53,6 +53,9 @@ public class ResultEntity {
     @Column(name = "state", nullable = false)
     ResultState state;
 
+    @Column(name = "best_approach")
+    Double bestApproach;
+
     @Column(name = "fail_reason")
     String failReason;
 
@@ -67,9 +70,10 @@ public class ResultEntity {
         FAILED
     }
 
-    public ResultEntity(InitialStateEntity initialState, String failReason) {
+    public ResultEntity(InitialStateEntity initialState, Double bestApproach, String failReason) {
         this.initialState = initialState;
         this.state = ResultState.NOT_OPTIMAL;
+        this.bestApproach = bestApproach;
         this.failReason = failReason;
     }
 

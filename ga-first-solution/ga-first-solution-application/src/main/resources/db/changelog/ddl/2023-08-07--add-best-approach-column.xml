@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="2023-08-07--01-add-best-approach-column-into-result" author="Stepan_Klimashin">
+        <preConditions onError="HALT">
+            <tableExists tableName="result"/>
+            <and>
+                <not>
+                    <columnExists tableName="result" columnName="best_approach"/>
+                </not>
+            </and>
+        </preConditions>
+
+        <addColumn tableName="result">
+            <column name="best_approach" type="double"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

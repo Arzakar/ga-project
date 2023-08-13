@@ -126,7 +126,8 @@ public class SolverFacade {
                                 return new ResultEntity(initialState, List.of(spacecraftPos.getX(), spacecraftPos.getY()), List.of(earthPos.getX(), earthPos.getY()));
 
                             } catch (NoOptimalSolutionException exception) {
-                                return new ResultEntity(initialState, exception.getMessage());
+                                var bestApproach = exception.getBestApproach() != 0 ? exception.getBestApproach() : null;
+                                return new ResultEntity(initialState, bestApproach, exception.getMessage());
 
                             } catch (Exception exception) {
                                 return new ResultEntity(initialState, ResultEntity.ResultState.FAILED, exception.getMessage());

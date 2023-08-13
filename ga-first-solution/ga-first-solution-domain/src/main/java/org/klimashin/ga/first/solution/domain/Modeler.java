@@ -1,7 +1,9 @@
 package org.klimashin.ga.first.solution.domain;
 
+import org.klimashin.ga.first.solution.domain.model.exception.NoOptimalSolutionException;
 import org.klimashin.ga.first.solution.domain.util.Physics;
 import org.klimashin.ga.first.solution.util.math.model.Vector2D;
+import org.klimashin.ga.first.solution.util.math.util.Points;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +18,23 @@ public record Modeler(ModelEnvironment environment) {
         var seconds = 0L;
         var deltaTime = 100L;
 
+        var spacecraft = environment.getSpacecraft();
+        var earth = environment.getCelestialBodies().stream()
+                .filter(body -> body.getName().equals("Earth"))
+                .findFirst()
+                .orElseThrow();
+
+        var minDistance = 0d;
+        var currentDistance = Points.distanceBetween(spacecraft.getPosition(), earth.getPosition());
+
         while (seconds < maxDuration) {
             executeStep(seconds, deltaTime);
+
+            var newDistance = Points.distanceBetween(spacecraft.getPosition(), earth.getPosition());
+            if (newDistance < currentDistance) {
+                minDistance = newDistance;
+            }
+            currentDistance = newDistance;
 
             if (environment.getTargetState().isAchieved()) {
                 return environment;
@@ -26,9 +43,7 @@ public record Modeler(ModelEnvironment environment) {
             seconds += deltaTime;
         }
 
-        throw new RuntimeException(String.format("""
-                Длительность перелёта превысила %d секунд. Моделирование закончено
-                """, maxDuration));
+        throw new NoOptimalSolutionException(String.format("Длительность перелёта превысила %d секунд", maxDuration), minDistance);
     }
 
     public List<ModelEnvironment> detailedExecute(final int nodesCount) throws RuntimeException {
