@@ -66,7 +66,6 @@ public class InitialStateEntity {
     public enum InitialStateStatus {
 
         CREATED,
-        PROCESSING,
         RESOLVED,
         FAILED
     }

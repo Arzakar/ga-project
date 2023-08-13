@@ -7,6 +7,7 @@
     <!-- DDL -->
     <include file="ddl/2023-08-05--create-domain-schema.xml" relativeToChangelogFile="true"/>
     <include file="ddl/2023-08-07--add-best-approach-column.xml" relativeToChangelogFile="true"/>
+    <include file="ddl/2023-08-13--refactor-celestial-body-table.xml" relativeToChangelogFile="true"/>
 
     <!-- DML -->
     <include file="dml/2023-08-05--load-default-entities.xml" relativeToChangelogFile="true"/>

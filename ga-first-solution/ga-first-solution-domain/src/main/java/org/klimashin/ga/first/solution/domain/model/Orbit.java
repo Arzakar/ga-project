@@ -13,6 +13,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Orbit {
 
+    double apocenter;
+    double pericenter;
     double semiMajorAxis;
     double eccentricity;
     double inclination;

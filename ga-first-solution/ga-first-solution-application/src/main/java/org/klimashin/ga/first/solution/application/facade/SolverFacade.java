@@ -75,7 +75,9 @@ public class SolverFacade {
                         .map(initialState -> (Callable<ResultEntity>) () -> {
                             var centralBody = new PointParticle(solar.getMass(), Point2D.of(0, 0));
                             var earthOrbit = Orbit.builder()
-                                    .semiMajorAxis(earth.getSemiMajorAxis())
+                                    .apocenter(earth.getApocenter())
+                                    .pericenter(earth.getPericenter())
+                                    .semiMajorAxis((earth.getApocenter() + earth.getPericenter()) / 2)
                                     .eccentricity(earth.getEccentricity())
                                     .trueAnomaly(0)
                                     .build();

@@ -26,9 +26,12 @@ public class CelestialBodyEntity {
     @Column(name = "mass", nullable = false)
     Double mass;
 
-    @Column(name = "semi_major_axis", nullable = false)
-    Double semiMajorAxis;
-
     @Column(name = "eccentricity", nullable = false)
     Double eccentricity;
+
+    @Column(name = "apocenter")
+    Double apocenter;
+
+    @Column(name = "pericenter")
+    Double pericenter;
 }

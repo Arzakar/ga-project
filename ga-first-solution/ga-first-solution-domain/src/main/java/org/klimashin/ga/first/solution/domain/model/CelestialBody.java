@@ -44,10 +44,10 @@ public class CelestialBody extends PointParticle {
 
         var nextEccentricAnomaly = this.getEccentricAnomaly(timeFromPerihelionEpoch + deltaTime);
         var nextTrueAnomaly = Orbits.calculateTrueAnomaly(nextEccentricAnomaly, eccentricity);
+        orbit.setTrueAnomaly(nextTrueAnomaly);
+
         var nextPosition = Orbits.calculatePosition(this.orbit, nextEccentricAnomaly);
         var moveVector = Vectors.between(this.position, nextPosition);
-
-        orbit.setTrueAnomaly(nextTrueAnomaly);
         position.move(moveVector);
 
         return this;
